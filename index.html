@@ -1,0 +1,2277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MFF Kinégives — Cabinet de kinésithérapie à Gives</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* palette violette modernisée — plus de nuances, moins saturée */
+      --plum-900: #2a0e28;
+      --plum-800: #4a1b44;
+      --plum-700: #6b2461;
+      --plum-600: #742869;
+      --plum-500: #8a4680;
+      --plum-400: #c190b8;
+      --plum-200: #e8d5e4;
+      --plum-100: #f3e9f1;
+      --plum-50:  #faf5f9;
+
+      /* neutres chauds — pas du blanc pur */
+      --ivory:    #fbf8f6;
+      --cream:    #f5efeb;
+      --sand:     #ebe3dc;
+      --ink:      #1a1217;
+      --ink-soft: #3a2f36;
+      --muted:    #8a7a85;
+
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+
+      --shadow-sm: 0 1px 2px rgba(42, 14, 40, 0.06), 0 2px 8px rgba(42, 14, 40, 0.04);
+      --shadow-md: 0 4px 16px rgba(42, 14, 40, 0.08), 0 16px 40px rgba(42, 14, 40, 0.06);
+      --shadow-lg: 0 12px 32px rgba(42, 14, 40, 0.12), 0 32px 64px rgba(42, 14, 40, 0.10);
+
+      --ease: cubic-bezier(0.32, 0.72, 0, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--ivory);
+      color: var(--ink);
+      overflow-x: hidden;
+      font-feature-settings: 'ss01', 'cv11';
+      -webkit-font-smoothing: antialiased;
+    }
+    ::selection { background: var(--plum-700); color: var(--ivory); }
+
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--plum-600);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--plum-400);
+    }
+
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      color: var(--plum-800);
+      letter-spacing: -0.01em;
+      text-wrap: balance;
+    }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 16px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      width: calc(100% - 32px);
+      max-width: 880px;
+      background: rgba(26, 18, 23, 0.55);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      padding: 8px 8px 8px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 10px 40px rgba(42, 14, 40, 0.25), inset 0 1px 0 rgba(255,255,255,0.08);
+      transition: transform 0.6s var(--ease), opacity 0.6s var(--ease);
+    }
+    nav.hidden { transform: translate(-50%, -140%); opacity: 0; }
+
+    .nav-logo {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-logo-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--plum-400);
+      box-shadow: 0 0 12px var(--plum-400);
+    }
+
+    .nav-links {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      padding: 4px;
+    }
+    .nav-pill {
+      position: absolute;
+      top: 4px; left: 4px;
+      height: calc(100% - 8px);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: left 0.44s var(--ease-spring), width 0.44s var(--ease-spring);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .nav-links a {
+      position: relative;
+      z-index: 1;
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: rgba(255,255,255,0.95); }
+    .nav-links a.active { color: #fff; font-weight: 500; }
+
+    .nav-cta {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--plum-900);
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: var(--ivory);
+      white-space: nowrap;
+      transition: transform 0.2s var(--ease), box-shadow 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+    .nav-cta svg { width: 12px; height: 12px; }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+      background: var(--plum-900);
+    }
+    /* Média plein cadre */
+    .hero-media { position: absolute; inset: 0; z-index: 0; }
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 38%;
+      transform: scale(1.03);
+      animation: heroZoom 22s ease-out infinite alternate;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.03); }
+      to   { transform: scale(1.1); }
+    }
+    .hero-scrim {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(180deg, rgba(26,18,23,0.55) 0%, rgba(26,18,23,0.05) 20%, rgba(26,18,23,0.10) 46%, rgba(26,18,23,0.74) 86%, rgba(26,18,23,0.94) 100%),
+        linear-gradient(90deg, rgba(26,18,23,0.62) 0%, rgba(26,18,23,0.14) 44%, transparent 70%);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 120px clamp(28px, 5vw, 72px) clamp(150px, 22vh, 300px);
+    }
+    .hero .eyebrow { color: var(--plum-400); }
+    .hero .eyebrow::before { background: var(--plum-400); }
+
+    .hero h1 {
+      font-size: clamp(52px, 8vw, 116px);
+      line-height: 0.94;
+      font-weight: 500;
+      color: var(--ivory);
+      letter-spacing: -0.02em;
+      margin: 20px 0 26px;
+      max-width: 16ch;
+      text-shadow: 0 2px 50px rgba(0,0,0,0.35);
+    }
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--plum-400);
+    }
+    .hero h1 .reveal-word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(40%);
+      animation: revealWord 0.9s var(--ease) forwards;
+    }
+    @keyframes revealWord {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-lede {
+      font-size: clamp(16px, 1.35vw, 19px);
+      line-height: 1.6;
+      color: rgba(251, 248, 246, 0.85);
+      font-weight: 300;
+      max-width: 500px;
+      margin-bottom: 34px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 0;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ivory);
+      text-decoration: none;
+      padding: 15px 26px;
+      border-radius: 999px;
+      background: var(--plum-800);
+      letter-spacing: 0.01em;
+      transition: transform 0.2s var(--ease), background 0.25s;
+      box-shadow: 0 4px 18px rgba(74, 27, 68, 0.25);
+    }
+    .btn-primary:hover { transform: translateY(-2px); background: var(--plum-900); }
+    .btn-primary svg { width: 14px; height: 14px; transition: transform 0.3s var(--ease); }
+    .btn-primary:hover svg { transform: translateX(3px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--plum-800);
+      text-decoration: none;
+      padding: 15px 22px;
+      border-radius: 999px;
+      border: 1px solid var(--plum-200);
+      background: transparent;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .btn-ghost:hover { background: var(--plum-50); border-color: var(--plum-400); }
+    .btn-ghost svg { width: 14px; height: 14px; }
+
+    /* Boutons adaptés au fond photo sombre */
+    .hero .btn-primary {
+      background: var(--ivory);
+      color: var(--plum-900);
+      box-shadow: 0 10px 34px rgba(0,0,0,0.32);
+    }
+    .hero .btn-primary:hover { background: #ffffff; }
+    .hero .btn-ghost {
+      color: var(--ivory);
+      border-color: rgba(255,255,255,0.32);
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .hero .btn-ghost:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.5);
+    }
+
+    /* Bandeau d'infos vitré (bas du hero) */
+    .hero-strip {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 2;
+      width: 100%;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 clamp(28px, 5vw, 72px) clamp(22px, 3vw, 34px);
+    }
+    .hero-strip-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 18px;
+      overflow: hidden;
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+    .hero-strip-cell {
+      background: rgba(26,18,23,0.34);
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      justify-content: center;
+    }
+    .hero-strip-cell.accent { flex-direction: row; align-items: center; gap: 11px; }
+    .hero-strip-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--plum-400);
+    }
+    .hero-strip-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ivory);
+      line-height: 1.3;
+    }
+    .hero-strip-sub {
+      font-size: 11px;
+      color: rgba(251,248,246,0.6);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .hero-strip-dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 0 4px rgba(74,222,128,0.18);
+      animation: pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(74,222,128,0.18); }
+      50%      { box-shadow: 0 0 0 8px rgba(74,222,128,0.08); }
+    }
+
+
+    /* ─── SECTION WRAPPER ─── */
+    section.content {
+      padding: 100px clamp(32px, 5vw, 72px);
+      position: relative;
+    }
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: end;
+      margin-bottom: 72px;
+    }
+    .section-head h2 {
+      font-size: clamp(36px, 4.5vw, 60px);
+      line-height: 1.02;
+      font-weight: 500;
+      margin-top: 18px;
+    }
+    .section-head h2 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--plum-600);
+    }
+    .section-head p {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--ink-soft);
+      font-weight: 300;
+      max-width: 440px;
+      justify-self: end;
+    }
+
+    /* ─── EXPERTISE ─── */
+    .expertise { background: var(--ivory); }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .card {
+      position: relative;
+      background: var(--cream);
+      border: 1px solid transparent;
+      border-radius: var(--radius-lg);
+      padding: 40px 32px 36px;
+      transition: transform 0.4s var(--ease), background 0.3s, border-color 0.3s;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--plum-300, var(--plum-400)), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      background: var(--plum-50);
+      border-color: var(--plum-200);
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--plum-600);
+      letter-spacing: 0.1em;
+      margin-bottom: 40px;
+    }
+    .card-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: var(--ivory);
+      border: 1px solid var(--plum-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      transition: background 0.3s, transform 0.3s var(--ease);
+    }
+    .card:hover .card-icon {
+      background: var(--plum-700);
+      border-color: var(--plum-700);
+      transform: rotate(-4deg);
+    }
+    .card-icon svg {
+      width: 22px; height: 22px;
+      stroke: var(--plum-700);
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.3s;
+    }
+    .card:hover .card-icon svg { stroke: var(--ivory); }
+
+    .card h3 {
+      font-size: 26px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: var(--plum-900);
+    }
+    .card p {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      font-weight: 300;
+      margin-bottom: 20px;
+    }
+    .card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 16px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--plum-200);
+    }
+    .card-list li {
+      list-style: none;
+      font-size: 12px;
+      color: var(--ink-soft);
+      font-family: 'JetBrains Mono', monospace;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-list li::before {
+      content: '';
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--plum-500);
+    }
+
+    /* ─── PRATICIENS ─── */
+    .praticiens { background: var(--cream); }
+
+    .praticiens-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .praticien {
+      background: var(--ivory);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 440px 1fr;
+      transition: transform 0.4s var(--ease), box-shadow 0.4s;
+      box-shadow: var(--shadow-sm);
+    }
+    .praticien:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .praticien-photo {
+      position: relative;
+      background: var(--plum-100);
+      min-height: 280px;
+      overflow: hidden;
+    }
+    .praticien-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(42, 14, 40, 0.2) 100%);
+    }
+    .praticien-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: saturate(0.92);
+      transition: transform 0.6s var(--ease);
+    }
+    .praticien:hover .praticien-photo img { transform: scale(1.04); }
+
+    .praticien-tag {
+      position: absolute;
+      top: 16px; left: 16px;
+      z-index: 1;
+      background: rgba(251, 248, 246, 0.92);
+      backdrop-filter: blur(10px);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--plum-800);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .praticien-tag-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--plum-600);
+    }
+
+    .praticien-body {
+      padding: 28px 28px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .praticien-role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--plum-600);
+      margin-bottom: 8px;
+    }
+    .praticien h3 {
+      font-size: 28px;
+      font-weight: 500;
+      margin-bottom: 14px;
+      line-height: 1.05;
+    }
+    .praticien-bio {
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      font-weight: 300;
+      margin-bottom: 18px;
+    }
+    .praticien-dipl {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--plum-100);
+    }
+    .praticien-dipl-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .praticien-dipl ul {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      list-style: none;
+    }
+    .praticien-dipl li {
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+    }
+    .praticien-dipl li span:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--plum-600);
+      flex-shrink: 0;
+      width: 36px;
+    }
+
+    /* ─── LE CABINET (galerie) ─── */
+    .cabinet { background: var(--ivory); }
+
+    /* ─── INTERACTIVE TOUR ─── */
+    .tour-wrapper {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--plum-900);
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 56px;
+      border: 1px solid var(--plum-200);
+    }
+
+    /* ─── GALERIE PHOTOS (éditorial split, double-bezel) ─── */
+    .gallery {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 14px;
+      padding: 14px;
+      /* plateau extérieur (double-bezel) */
+      background: linear-gradient(160deg, var(--cream) 0%, var(--sand) 100%);
+      border: 1px solid rgba(107, 36, 97, 0.12);
+      border-radius: 32px;
+      box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      margin-bottom: 56px;
+    }
+    .gallery-main {
+      position: relative;
+      height: clamp(460px, 60vh, 640px);
+      border-radius: 22px;
+      overflow: hidden;
+      background: var(--plum-900);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08),
+                  inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+    }
+    .gallery-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: blur(34px) brightness(0.45) saturate(1.2);
+      transform: scale(1.2);
+      z-index: 0;
+    }
+    .gallery-frame {
+      position: relative;
+      height: 100%;
+      aspect-ratio: 3 / 4;
+      max-width: 100%;
+      z-index: 1;
+      box-shadow: 0 24px 60px rgba(26, 18, 23, 0.5);
+    }
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: opacity 0.45s var(--ease), transform 0.6s var(--ease);
+    }
+    .gallery-img.is-swapping {
+      opacity: 0;
+      transform: scale(1.03);
+    }
+    .gallery-hotspots {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s var(--ease);
+      z-index: 4;
+    }
+    .gallery-hotspots.is-visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: none;
+    }
+    .gallery-hotspot {
+      position: absolute;
+      transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: rgba(251, 248, 246, 0.95);
+      border: 2px solid var(--plum-700);
+      color: var(--plum-800);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      pointer-events: auto;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.35);
+      transition: transform 0.25s var(--ease-spring), background 0.25s, color 0.25s;
+    }
+    .gallery-hotspot::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px solid rgba(251, 248, 246, 0.55);
+      animation: hotspotPulse 2s ease-out infinite;
+    }
+    .gallery-hotspot:hover {
+      transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(1.12);
+      background: var(--plum-700);
+      color: var(--ivory);
+    }
+    .gallery-hotspot-label {
+      position: absolute;
+      top: 50%;
+      left: 56px;
+      transform: translateY(-50%);
+      background: rgba(26, 18, 23, 0.9);
+      backdrop-filter: blur(8px);
+      color: var(--ivory);
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s var(--ease);
+    }
+    .gallery-hotspot:hover .gallery-hotspot-label {
+      opacity: 1;
+      transform: translateY(-50%) translateX(4px);
+    }
+
+    /* Légende cinématique */
+    .gallery-caption {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      z-index: 3;
+      padding: 56px 28px 26px;
+      background: linear-gradient(0deg, rgba(26,18,23,0.85) 0%, rgba(26,18,23,0.45) 55%, transparent 100%);
+      color: var(--ivory);
+      pointer-events: none;
+    }
+    .gallery-caption .tour-eyebrow { color: var(--plum-400); }
+    .gallery-caption h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 500;
+      color: var(--ivory);
+      line-height: 1.03;
+      margin: 4px 0 7px;
+    }
+    .gallery-caption p {
+      font-size: 14px;
+      line-height: 1.55;
+      color: rgba(251, 248, 246, 0.82);
+      font-weight: 300;
+      max-width: 46ch;
+    }
+    /* Compteur & indice */
+    .gallery-index, .gallery-hint {
+      position: absolute;
+      top: 18px;
+      z-index: 3;
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(26, 18, 23, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: rgba(251, 248, 246, 0.92);
+    }
+    .gallery-index {
+      right: 18px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      padding: 7px 12px;
+      border-radius: 999px;
+    }
+    .gallery-hint {
+      left: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 13px;
+      border-radius: 999px;
+      transition: opacity 0.35s var(--ease);
+    }
+    .gallery-hint svg { width: 13px; height: 13px; }
+
+    /* Flèches de navigation — sobres */
+    .gallery-nav {
+      position: absolute;
+      top: 46%;
+      transform: translateY(-50%);
+      z-index: 5;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(26, 18, 23, 0.18);
+      backdrop-filter: blur(8px) saturate(130%);
+      -webkit-backdrop-filter: blur(8px) saturate(130%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--ivory);
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s var(--ease), background 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+    .gallery-nav svg { width: 19px; height: 19px; }
+    .gallery-nav.prev { left: 16px; }
+    .gallery-nav.next { right: 16px; }
+    .gallery-nav.show { opacity: 1; pointer-events: auto; }
+    .gallery-nav.show:hover { background: rgba(26, 18, 23, 0.42); border-color: rgba(255,255,255,0.24); }
+    .gallery-nav.prev.show:hover { transform: translateY(-50%) translateX(-3px); }
+    .gallery-nav.next.show:hover { transform: translateY(-50%) translateX(3px); }
+    .gallery-nav.show:active { transform: translateY(-50%) scale(0.94); }
+
+    /* Plateau de vignettes (rail) */
+    .gallery-rail {
+      height: clamp(460px, 60vh, 640px);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-right: 4px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--plum-300, var(--plum-400)) transparent;
+    }
+    .gallery-rail::-webkit-scrollbar { width: 6px; }
+    .gallery-rail::-webkit-scrollbar-thumb { background: var(--plum-200); border-radius: 999px; }
+    .rail-item {
+      display: grid;
+      grid-template-columns: 68px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 8px;
+      border-radius: 16px;
+      cursor: pointer;
+      text-align: left;
+      background: transparent;
+      border: 1px solid transparent;
+      transition: background 0.35s var(--ease), border-color 0.35s var(--ease), transform 0.35s var(--ease);
+    }
+    .rail-item:hover { background: rgba(251, 248, 246, 0.7); transform: translateX(2px); }
+    .rail-item.active {
+      background: var(--ivory);
+      border-color: rgba(107, 36, 97, 0.18);
+      box-shadow: var(--shadow-sm);
+    }
+    .rail-item:active { transform: scale(0.99); }
+    .rail-thumb {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 11px;
+      overflow: hidden;
+      background: var(--plum-100);
+    }
+    .rail-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--ease);
+    }
+    .rail-item:hover .rail-thumb img { transform: scale(1.06); }
+    .rail-item.active .rail-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 2px solid var(--plum-600);
+      border-radius: 11px;
+    }
+    .rail-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .rail-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: var(--plum-500);
+    }
+    .rail-name { font-size: 14.5px; font-weight: 500; color: var(--plum-900); line-height: 1.2; }
+    .rail-item.active .rail-name { color: var(--plum-700); }
+    .rail-desc {
+      font-size: 11.5px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tour-viewer {
+      width: 100%;
+      height: 560px;
+      background: var(--plum-900);
+      position: relative;
+    }
+    .tour-viewer .pnlm-load-box,
+    .tour-viewer .pnlm-about-msg,
+    .tour-viewer .pnlm-zoom-controls,
+    .tour-viewer .pnlm-orientation-button,
+    .tour-viewer .pnlm-fullscreen-toggle-button,
+    .tour-viewer .pnlm-panorama-info,
+    .tour-viewer .pnlm-controls-container { display: none !important; }
+    .tour-viewer .pnlm-container { background: var(--plum-900); cursor: grab; }
+    .tour-viewer .pnlm-grab:active,
+    .tour-viewer .pnlm-grabbing { cursor: grabbing; }
+
+    /* Hotspot */
+    .tour-hotspot {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(251, 248, 246, 0.95);
+      border: 2px solid var(--plum-700);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.25s var(--ease);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .tour-hotspot::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px solid rgba(251, 248, 246, 0.5);
+      animation: hotspotPulse 2s ease-out infinite;
+    }
+    @keyframes hotspotPulse {
+      0%   { transform: scale(0.7); opacity: 1; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+    .tour-hotspot:hover { transform: scale(1.12); }
+    .tour-hotspot svg {
+      width: 18px; height: 18px;
+      stroke: var(--plum-800);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .tour-hotspot-label {
+      position: absolute;
+      top: 50%;
+      left: 54px;
+      transform: translateY(-50%);
+      background: rgba(26, 18, 23, 0.9);
+      backdrop-filter: blur(8px);
+      color: var(--ivory);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s var(--ease);
+    }
+    .tour-hotspot:hover .tour-hotspot-label {
+      opacity: 1;
+      transform: translateY(-50%) translateX(4px);
+    }
+
+    .tour-ui {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px;
+      background: linear-gradient(180deg, rgba(26,18,23,0.55) 0%, transparent 30%, transparent 60%, rgba(26,18,23,0.7) 100%);
+    }
+    .tour-ui-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      pointer-events: auto;
+    }
+    .tour-scene-info {
+      background: rgba(251, 248, 246, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 18px 22px;
+      border-radius: var(--radius-md);
+      max-width: 360px;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+    .tour-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--plum-600);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .tour-scene-info h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--plum-900);
+      margin-bottom: 4px;
+      line-height: 1.1;
+    }
+    .tour-scene-info p {
+      font-size: 13px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    .tour-help {
+      background: rgba(26, 18, 23, 0.55);
+      backdrop-filter: blur(10px);
+      color: rgba(251, 248, 246, 0.85);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .tour-help svg { width: 14px; height: 14px; }
+
+    .tour-scenes {
+      display: flex;
+      gap: 8px;
+      pointer-events: auto;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: rgba(26, 18, 23, 0.55);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      align-self: center;
+    }
+    .tour-scene-btn {
+      background: transparent;
+      border: none;
+      color: rgba(251, 248, 246, 0.7);
+      padding: 10px 18px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      transition: background 0.25s, color 0.25s;
+    }
+    .tour-scene-btn:hover {
+      background: rgba(255,255,255,0.08);
+      color: var(--ivory);
+    }
+    .tour-scene-btn.active {
+      background: var(--ivory);
+      color: var(--plum-900);
+    }
+    .tour-scene-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      opacity: 0.7;
+    }
+    .tour-scene-btn.active .tour-scene-num { color: var(--plum-600); opacity: 1; }
+
+    .tour-demo-note {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(26, 18, 23, 0.8);
+      backdrop-filter: blur(10px);
+      color: rgba(251, 248, 246, 0.8);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      z-index: 5;
+      pointer-events: none;
+    }
+    .tour-demo-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #f59e0b;
+      box-shadow: 0 0 8px rgba(245,158,11,0.6);
+    }
+
+    .cabinet-info {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 48px;
+      align-items: start;
+      padding: 40px;
+      background: var(--cream);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--sand);
+    }
+    .cabinet-info h3 {
+      font-size: 36px;
+      font-weight: 500;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    .cabinet-info p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--ink-soft);
+      font-weight: 300;
+      margin-bottom: 20px;
+    }
+    .cabinet-features {
+      display: grid;
+      gap: 22px;
+      align-content: center;
+    }
+    .feature {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .feature-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--plum-100);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .feature-icon svg {
+      width: 14px; height: 14px;
+      stroke: var(--plum-700);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .feature-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--plum-900);
+      margin-bottom: 2px;
+    }
+    .feature-desc {
+      font-size: 13px;
+      color: var(--ink-soft);
+      line-height: 1.55;
+      font-weight: 300;
+    }
+
+    /* ─── LOCATION / MAP ─── */
+    .location { background: var(--plum-50); }
+    .location-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 48px;
+      align-items: stretch;
+    }
+    .location-text {
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .location-text h2 {
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.05;
+      margin: 18px 0 20px;
+    }
+    .location-text p {
+      font-size: 15.5px;
+      color: var(--ink-soft);
+      line-height: 1.75;
+      font-weight: 300;
+      margin-bottom: 24px;
+      max-width: 460px;
+    }
+    .address-card {
+      background: var(--ivory);
+      border: 1px solid var(--plum-200);
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+      margin-bottom: 18px;
+      max-width: 460px;
+    }
+    .address-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--plum-600);
+      margin-bottom: 8px;
+    }
+    .address-value {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--plum-900);
+      line-height: 1.35;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .address-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .location-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .location-map {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      min-height: 480px;
+      border: 1px solid var(--plum-200);
+    }
+    .location-map iframe {
+      width: 100%; height: 100%;
+      border: 0;
+      display: block;
+      filter: saturate(0.9) contrast(0.96);
+    }
+
+    /* ─── HOURS ─── */
+    .hours-card {
+      background: var(--ivory);
+      border: 1px solid var(--plum-200);
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+      max-width: 460px;
+    }
+    .hours-card-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--plum-600);
+      margin-bottom: 14px;
+    }
+    .hours-list { display: flex; flex-direction: column; gap: 7px; }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      padding: 3px 0;
+      gap: 12px;
+    }
+    .hours-row.today {
+      color: var(--plum-900);
+      font-weight: 500;
+    }
+    .hours-row.closed { color: var(--muted); }
+    .hours-day { font-family: 'DM Sans', sans-serif; }
+    .hours-time { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-align: right; }
+    .hours-row.today .hours-day::after {
+      content: '• aujourd\'hui';
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--plum-600);
+      margin-left: 8px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .hours-note {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--plum-200);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+    .hours-note-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--plum-500);
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    /* ─── CONTACT / RDV COMBO ─── */
+    .rdv {
+      background: var(--plum-900);
+      padding: 100px clamp(32px, 5vw, 72px);
+      position: relative;
+      overflow: hidden;
+      color: var(--ivory);
+    }
+    .rdv::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--plum-700) 0%, transparent 70%);
+      opacity: 0.5;
+    }
+    .rdv::after {
+      content: '';
+      position: absolute;
+      bottom: -150px; left: -150px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--plum-800) 0%, transparent 65%);
+      opacity: 0.6;
+    }
+
+    .rdv-grid {
+      position: relative;
+      z-index: 1;
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: clamp(80px, 8vw, 140px);
+      align-items: center;
+    }
+    .rdv-left .eyebrow {
+      color: var(--plum-400);
+    }
+    .rdv-left .eyebrow::before { background: var(--plum-400); }
+    .rdv-left h2 {
+      font-size: clamp(42px, 5vw, 72px);
+      line-height: 1;
+      color: var(--ivory);
+      margin: 20px 0 24px;
+      font-weight: 500;
+    }
+    .rdv-left h2 em {
+      font-style: italic;
+      color: var(--plum-400);
+      font-weight: 400;
+    }
+    .rdv-left p {
+      font-size: 17px;
+      color: rgba(251, 248, 246, 0.7);
+      line-height: 1.65;
+      font-weight: 300;
+      max-width: 480px;
+      margin-bottom: 36px;
+    }
+
+    .rdv-contacts {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .rdv-contact {
+      background: rgba(251, 248, 246, 0.06);
+      border: 1px solid rgba(251, 248, 246, 0.12);
+      border-radius: var(--radius-md);
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      text-decoration: none;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s var(--ease);
+      color: var(--ivory);
+    }
+    .rdv-contact:hover {
+      background: rgba(251, 248, 246, 0.1);
+      border-color: rgba(251, 248, 246, 0.24);
+      transform: translateX(4px);
+    }
+    .rdv-contact-ico {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--plum-700);
+      border: 1px solid var(--plum-600);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .rdv-contact-ico svg {
+      width: 18px; height: 18px;
+      stroke: var(--ivory);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .rdv-contact-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--plum-400);
+      margin-bottom: 4px;
+    }
+    .rdv-contact-value {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--ivory);
+      letter-spacing: 0.01em;
+    }
+    .rdv-contact-arrow {
+      margin-left: auto;
+      width: 18px; height: 18px;
+      color: rgba(251, 248, 246, 0.4);
+      transition: transform 0.3s var(--ease), color 0.3s;
+    }
+    .rdv-contact:hover .rdv-contact-arrow {
+      transform: translateX(4px);
+      color: var(--plum-400);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--plum-900);
+      padding: 40px 32px 28px;
+      border-top: 1px solid rgba(251, 248, 246, 0.08);
+    }
+    .footer-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-logo {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      color: rgba(251, 248, 246, 0.7);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer-logo-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--plum-400);
+    }
+    .footer-copy {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: rgba(251, 248, 246, 0.35);
+    }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a {
+      font-size: 12px;
+      color: rgba(251, 248, 246, 0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.02em;
+    }
+    .footer-links a:hover { color: var(--plum-400); }
+
+    /* ─── REVEAL ON SCROLL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 960px) {
+      .hero-strip-inner { grid-template-columns: repeat(2, 1fr); }
+      .section-head { grid-template-columns: 1fr; gap: 20px; }
+      .section-head p { justify-self: start; }
+      .cards { grid-template-columns: 1fr; }
+      .praticiens-grid { grid-template-columns: 1fr; }
+      .praticien { grid-template-columns: 1fr; }
+      .praticien-photo { min-height: 320px; }
+      .tour-viewer { height: 420px; }
+      /* Galerie : passage en colonne, rail horizontal */
+      .gallery { grid-template-columns: 1fr; gap: 12px; padding: 12px; border-radius: 26px; }
+      .gallery-main { height: min(74vh, 560px); }
+      .gallery-caption { padding: 46px 20px 22px; }
+      .gallery-caption h4 { font-size: 26px; }
+      .gallery-rail {
+        height: auto;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 2px 2px 8px;
+        gap: 10px;
+      }
+      .rail-item {
+        grid-template-columns: 1fr;
+        grid-auto-rows: min-content;
+        gap: 8px;
+        width: 150px;
+        flex: 0 0 auto;
+        padding: 8px;
+      }
+      .rail-thumb { aspect-ratio: 4 / 3; }
+      .rail-desc { white-space: normal; }
+      .cabinet-info { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
+      .location-grid { grid-template-columns: 1fr; }
+      .location-map { min-height: 360px; }
+      .rdv-grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+    @media (max-width: 600px) {
+      section.content { padding: 72px 20px; }
+      .rdv { padding: 80px 20px; }
+      .hero-inner { padding-top: 118px; }
+      .hero-strip-inner { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      nav { padding: 6px 6px 6px 16px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+
+    /* ─── PRESS FEEDBACK ─── */
+    .btn-primary:active,
+    .btn-ghost:active,
+    .nav-cta:active,
+    .tour-scene-btn:active {
+      transform: scale(0.97);
+      transition: transform 0.12s var(--ease);
+    }
+
+    /* ─── TOUCH: neutraliser le mouvement au "hover" fantôme ─── */
+    @media (hover: none), (pointer: coarse) {
+      .card:hover { transform: none; }
+      .praticien:hover .praticien-photo img { transform: none; }
+      .rdv-contact:hover { transform: none; }
+      .rdv-contact:hover .rdv-contact-arrow { transform: none; }
+      .btn-primary:hover,
+      .nav-cta:hover { transform: none; }
+    }
+
+    /* ─── REDUCED MOTION ─── */
+    @media (prefers-reduced-motion: reduce) {
+      /* Couper toutes les boucles infinies et neutraliser les déplacements */
+      .hero-strip-dot,
+      .tour-hotspot::before,
+      .gallery-hotspot::before {
+        animation: none !important;
+      }
+      .gallery-img { transition: opacity 0.3s ease; }
+      .gallery-img.is-swapping { transform: none; }
+      /* Mots du hero : visibles d'emblée, sans translation */
+      .hero h1 .reveal-word {
+        animation: none !important;
+        opacity: 1;
+        transform: none;
+      }
+      /* Révélations au scroll : garder le fondu, supprimer le glissement */
+      .reveal {
+        transition: opacity 0.3s ease;
+        transform: none;
+      }
+      .reveal.in { transform: none; }
+      /* Neutraliser le zoom permanent du hero sur son état de base */
+      .hero-photo {
+        animation: none !important;
+        transform: scale(1.03);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="nav">
+    <a href="#hero" class="nav-logo"><span class="nav-logo-dot"></span>MFF KINÉGIVES</a>
+    <div class="nav-links" id="navLinks">
+      <div class="nav-pill" id="navPill"></div>
+      <a href="#hero" class="active" data-section="hero">Accueil</a>
+      <a href="#expertises" data-section="expertises">Soins</a>
+      <a href="#praticiens" data-section="praticiens">Praticienne</a>
+      <a href="#cabinet" data-section="cabinet">Cabinet</a>
+      <a href="#contact" data-section="contact">Contact</a>
+    </div>
+    <a href="#contact" class="nav-cta">
+      Prendre RDV
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-media">
+      <img class="hero-photo" src="photos/vue-ensemble.jpg" alt="Le cabinet de kinésithérapie MFF Kinégives à Gives" />
+      <div class="hero-scrim"></div>
+    </div>
+
+    <div class="hero-inner">
+      <span class="eyebrow">Kinésithérapie · Gives, Belgique</span>
+      <h1>
+        <span class="reveal-word" style="animation-delay:0.1s">Retrouvez</span>
+        <span class="reveal-word" style="animation-delay:0.2s">votre</span>
+        <em>
+          <span class="reveal-word" style="animation-delay:0.3s">mobilité,</span>
+        </em>
+        <span class="reveal-word" style="animation-delay:0.45s">à</span>
+        <span class="reveal-word" style="animation-delay:0.55s">votre</span>
+        <span class="reveal-word" style="animation-delay:0.65s">rythme.</span>
+      </h1>
+      <p class="hero-lede">
+        Un cabinet à taille humaine où chaque prise en charge est pensée sur mesure —
+        rééducation, kiné respiratoire et suivi post-opératoire.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">
+          Prendre rendez-vous
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#praticiens" class="btn-ghost">
+          Rencontrer votre futur kiné
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-strip">
+      <div class="hero-strip-inner">
+        <div class="hero-strip-cell">
+          <span class="hero-strip-label">Adresse</span>
+          <span class="hero-strip-value">Rue E. Vandervelde 17</span>
+          <span class="hero-strip-sub">4500 Gives (BE)</span>
+        </div>
+        <div class="hero-strip-cell">
+          <span class="hero-strip-label">Au cabinet</span>
+          <span class="hero-strip-value">9:00–11:30 / 17:00–20:00</span>
+          <span class="hero-strip-sub">sur rendez-vous</span>
+        </div>
+        <div class="hero-strip-cell">
+          <span class="hero-strip-label">À domicile</span>
+          <span class="hero-strip-value">11:30 – 17:00</span>
+          <span class="hero-strip-sub">sur rendez-vous</span>
+        </div>
+        <div class="hero-strip-cell accent">
+          <span class="hero-strip-dot"></span>
+          <span>
+            <span class="hero-strip-label">Statut</span>
+            <span class="hero-strip-value">INAMI agréée</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISES -->
+  <section class="expertise content" id="expertises">
+    <div class="container">
+      <div class="section-head">
+        <div class="reveal">
+          <span class="eyebrow">Domaines de soins</span>
+          <h2>Une pratique complète, <em>au service de chaque patient.</em></h2>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card reveal">
+          <div class="card-num">01 / Respiratoire</div>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 4v16M7 9c-2 3-2 6 0 9M17 9c2 3 2 6 0 9M5 12h14"/></svg>
+          </div>
+          <h3>Kiné respiratoire</h3>
+          <p>Pour les nourrissons, enfants et adultes. Drainage bronchique, aérosols et rééducation ventilatoire.</p>
+          <ul class="card-list">
+            <li>Bronchiolites</li>
+            <li>BPCO &amp; asthme</li>
+            <li>Post-hospitalisation</li>
+          </ul>
+        </div>
+
+        <div class="card reveal reveal-delay-1">
+          <div class="card-num">02 / Rééducation</div>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+          </div>
+          <h3>Rééducation</h3>
+          <p>Orthopédique, neurologique et post-opératoire. Récupération progressive, avec suivi personnalisé.</p>
+          <ul class="card-list">
+            <li>Post-chirurgie</li>
+            <li>Entorses &amp; fractures</li>
+            <li>AVC &amp; pathologies neuro</li>
+          </ul>
+        </div>
+
+        <div class="card reveal reveal-delay-2">
+          <div class="card-num">03 / Appareillage</div>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          </div>
+          <h3>Prothèses</h3>
+          <p>Accompagnement prothétique et appareillage. Reprise d'autonomie et travail en situation réelle.</p>
+          <ul class="card-list">
+            <li>Prothèses de hanche</li>
+            <li>Prothèses de genou</li>
+            <li>Suivi à long terme</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRATICIENS -->
+  <section class="praticiens content" id="praticiens">
+    <div class="container">
+      <div class="section-head">
+        <div class="reveal">
+          <span class="eyebrow">Votre kiné</span>
+          <h2>Une praticienne, <em>un suivi dédié.</em></h2>
+        </div>
+        <p class="reveal reveal-delay-1" hidden></p>
+      </div>
+
+      <div class="praticiens-grid">
+
+        <article class="praticien reveal">
+          <div class="praticien-photo">
+            <span class="praticien-tag"><span class="praticien-tag-dot"></span>INAMI agréée</span>
+            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80" alt="Portrait de Marie-France Filée" />
+          </div>
+          <div class="praticien-body">
+            <div class="praticien-role">Kinésithérapeute · Fondatrice</div>
+            <h3>Marie-France Filée</h3>
+            <p class="praticien-bio">
+              Installée à Gives, Marie-France accompagne ses patients avec une approche
+              rigoureuse et humaine. Elle intervient principalement en kinésithérapie
+              respiratoire, rééducation post-opératoire et appareillage prothétique —
+              avec un suivi continu à chaque étape.
+            </p>
+            <div class="praticien-dipl">
+              <div class="praticien-dipl-label">Formations &amp; spécialisations</div>
+              <ul>
+                <li><span>—</span><span>Master en kinésithérapie</span></li>
+                <li><span>—</span><span>Kiné respiratoire &amp; cryothérapie</span></li>
+                <li><span>—</span><span>Rééducation post-opératoire</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CABINET -->
+  <section class="cabinet content" id="cabinet">
+    <div class="container">
+      <div class="section-head">
+        <div class="reveal">
+          <span class="eyebrow">Le cabinet</span>
+          <h2>Un lieu pensé <em>pour votre confort.</em></h2>
+        </div>
+        <p class="reveal reveal-delay-1" hidden></p>
+      </div>
+
+      <div class="gallery reveal">
+        <!-- Cœur : image en vedette -->
+        <div class="gallery-main">
+          <div class="gallery-bg" id="galleryBg"></div>
+          <div class="gallery-frame">
+            <img class="gallery-img" id="galleryImg" src="photos/vue-ensemble.jpg" alt="Vue d'ensemble des cabines du cabinet MFF Kinégives" />
+
+            <!-- Zones cliquables — visibles uniquement sur la vue d'ensemble -->
+            <div class="gallery-hotspots is-visible" id="galleryHotspots">
+              <button class="gallery-hotspot" style="left:31%; top:40%; --rot:-3deg;" data-goto="cabine-1" aria-label="Voir la cabine 1">
+                <span class="gh-num">1</span>
+                <span class="gallery-hotspot-label">Cabine 1</span>
+              </button>
+              <button class="gallery-hotspot" style="left:57%; top:38.6%; --rot:-3deg;" data-goto="cabine-2" aria-label="Voir la cabine 2">
+                <span class="gh-num">2</span>
+                <span class="gallery-hotspot-label">Cabine 2</span>
+              </button>
+              <button class="gallery-hotspot" style="left:84%; top:37.2%; --rot:-3deg;" data-goto="cabine-3" aria-label="Voir la cabine 3">
+                <span class="gh-num">3</span>
+                <span class="gallery-hotspot-label">Cabine 3</span>
+              </button>
+            </div>
+
+            <div class="gallery-index"><span id="galleryIndex">00 / 05</span></div>
+
+            <div class="gallery-hint" id="galleryHint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              Cliquez sur une cabine
+            </div>
+
+            <div class="gallery-caption">
+              <span class="tour-eyebrow">Le cabinet · Visite en images</span>
+              <h4 id="tourSceneTitle">Vue d'ensemble</h4>
+              <p id="tourSceneDesc">Nos espaces de soin séparés par des cabines. Cliquez sur une cabine pour la découvrir.</p>
+            </div>
+
+            <button class="gallery-nav prev" id="galleryPrev" type="button" aria-label="Vue précédente">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <button class="gallery-nav next" id="galleryNext" type="button" aria-label="Vue suivante">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Plateau de navigation : vignettes -->
+        <div class="gallery-rail" id="galleryRail">
+          <button class="rail-item active" data-scene="vue-ensemble">
+            <span class="rail-thumb"><img src="photos/vue-ensemble.jpg" alt="" loading="lazy" /></span>
+            <span class="rail-text">
+              <span class="rail-num">00</span>
+              <span class="rail-name">Vue d'ensemble</span>
+              <span class="rail-desc">Nos espaces en un coup d'œil</span>
+            </span>
+          </button>
+          <button class="rail-item" data-scene="cabine-1">
+            <span class="rail-thumb"><img src="photos/cabine-1.jpg" alt="" loading="lazy" /></span>
+            <span class="rail-text">
+              <span class="rail-num">01</span>
+              <span class="rail-name">Cabine 1</span>
+              <span class="rail-desc">Table & matériel de rééducation</span>
+            </span>
+          </button>
+          <button class="rail-item" data-scene="cabine-2">
+            <span class="rail-thumb"><img src="photos/cabine-2.jpg" alt="" loading="lazy" /></span>
+            <span class="rail-text">
+              <span class="rail-num">02</span>
+              <span class="rail-name">Cabine 2</span>
+              <span class="rail-desc">Espalier & récupération</span>
+            </span>
+          </button>
+          <button class="rail-item" data-scene="cabine-3">
+            <span class="rail-thumb"><img src="photos/cabine-3.jpg" alt="" loading="lazy" /></span>
+            <span class="rail-text">
+              <span class="rail-num">03</span>
+              <span class="rail-name">Cabine 3</span>
+              <span class="rail-desc">Soins individuels au calme</span>
+            </span>
+          </button>
+          <button class="rail-item" data-scene="consultation">
+            <span class="rail-thumb"><img src="photos/consultation.jpg" alt="" loading="lazy" /></span>
+            <span class="rail-text">
+              <span class="rail-num">04</span>
+              <span class="rail-name">Consultation</span>
+              <span class="rail-desc">Coin bilan & échange</span>
+            </span>
+          </button>
+          <button class="rail-item" data-scene="fitness">
+            <span class="rail-thumb"><img src="photos/fitness.jpg" alt="" loading="lazy" /></span>
+            <span class="rail-text">
+              <span class="rail-num">05</span>
+              <span class="rail-name">Salle de fitness</span>
+              <span class="rail-desc">Réentraînement à l'effort</span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="cabinet-info reveal">
+        <div>
+          <h3>Pensé comme un espace de soin, pas une salle d'attente.</h3>
+          <p>
+            Au cœur de Gives, le cabinet propose trois espaces dédiés — une salle principale
+            lumineuse équipée pour la rééducation, une salle dédiée à la kiné respiratoire,
+            et un espace d'accueil apaisant.
+          </p>
+          <p>
+            Chaque détail — acoustique, lumière, matériel — a été choisi pour que vous vous
+            sentiez en confiance dès votre arrivée.
+          </p>
+        </div>
+        <div class="cabinet-features">
+          <div class="feature">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div>
+              <div class="feature-title">Espaces séparés</div>
+              <div class="feature-desc">4 cabines, une salle principale spacieuse et une salle d'attente accueillante.</div>
+            </div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            </div>
+            <div>
+              <div class="feature-title">Lumière naturelle</div>
+              <div class="feature-desc">Larges fenêtres et ambiance apaisante toute la journée.</div>
+            </div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <div>
+              <div class="feature-title">Approche humaine</div>
+              <div class="feature-desc">Temps long, écoute, rythme respecté.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location content" id="location">
+    <div class="container">
+      <div class="location-grid">
+        <div class="location-text">
+          <span class="eyebrow reveal">Où nous trouver</span>
+          <h2 class="reveal">Au cœur de Gives, <em>facilement accessible.</em></h2>
+          <p class="reveal reveal-delay-1">
+            Stationnement gratuit devant le cabinet et à proximité immédiate des axes principaux.
+          </p>
+
+          <div class="address-card reveal reveal-delay-1">
+            <div class="address-label">Adresse du cabinet</div>
+            <div class="address-value">Rue Emile Vandervelde, 17</div>
+            <div class="address-sub">4500 GIVES · BELGIQUE</div>
+          </div>
+
+          <div class="hours-card reveal reveal-delay-2" id="hoursCard">
+            <div class="hours-card-label">Horaires — cabinet &amp; domicile</div>
+            <div class="hours-list" id="hoursList">
+              <div class="hours-row" data-day="1"><span class="hours-day">Lundi</span><span class="hours-time">9:00–11:30 · 17:00–20:00</span></div>
+              <div class="hours-row" data-day="2"><span class="hours-day">Mardi</span><span class="hours-time">9:00–11:30 · 17:00–20:00</span></div>
+              <div class="hours-row" data-day="3"><span class="hours-day">Mercredi</span><span class="hours-time">9:00–11:30 · 17:00–20:00</span></div>
+              <div class="hours-row" data-day="4"><span class="hours-day">Jeudi</span><span class="hours-time">9:00–11:30 · 17:00–20:00</span></div>
+              <div class="hours-row" data-day="5"><span class="hours-day">Vendredi</span><span class="hours-time">9:00–11:30 · 17:00–20:00</span></div>
+              <div class="hours-row closed" data-day="6"><span class="hours-day">Samedi</span><span class="hours-time">/</span></div>
+              <div class="hours-row closed" data-day="0"><span class="hours-day">Dimanche</span><span class="hours-time">/</span></div>
+            </div>
+            <div class="hours-note">
+              <span class="hours-note-dot"></span>
+              En dehors de ces plages, je me déplace à domicile (11:30–17:00).
+            </div>
+          </div>
+
+          <div class="location-actions reveal reveal-delay-3" style="margin-top: 22px;">
+            <a href="https://www.google.com/maps/dir/?api=1&destination=Rue+Emile+Vandervelde+17,+4500+Gives,+Belgique" target="_blank" rel="noopener" class="btn-primary">
+              Itinéraire
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="location-map reveal reveal-delay-2">
+          <iframe
+            src="https://maps.google.com/maps?q=Rue+Emile+Vandervelde+17,+4500+Gives,+Belgique&z=15&output=embed"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Localisation MFF Kinégives"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RDV / CONTACT -->
+  <section class="rdv" id="contact">
+    <div class="rdv-grid">
+      <div class="rdv-left">
+        <span class="eyebrow reveal">Contact</span>
+        <h2 class="reveal">Prenez rendez-vous <em>dès aujourd'hui.</em></h2>
+        <p class="reveal reveal-delay-1">
+          Par téléphone ou par email — nous vous répondons rapidement pour caler
+          un premier créneau.
+        </p>
+      </div>
+
+      <div class="rdv-contacts">
+        <a href="tel:+3204123456" class="rdv-contact reveal reveal-delay-1">
+          <div class="rdv-contact-ico">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.86a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/></svg>
+          </div>
+          <div>
+            <div class="rdv-contact-label">Téléphone</div>
+            <div class="rdv-contact-value">+32 4 123 45 67</div>
+          </div>
+          <svg class="rdv-contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+
+        <a href="mailto:contact@mff-kinegives.be" class="rdv-contact reveal reveal-delay-2">
+          <div class="rdv-contact-ico">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="rdv-contact-label">Email</div>
+            <div class="rdv-contact-value">contact@mff-kinegives.be</div>
+          </div>
+          <svg class="rdv-contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Rue+Emile+Vandervelde+17,+4500+Gives,+Belgique" target="_blank" rel="noopener" class="rdv-contact reveal reveal-delay-3">
+          <div class="rdv-contact-ico">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+          <div>
+            <div class="rdv-contact-label">Adresse</div>
+            <div class="rdv-contact-value">Rue E. Vandervelde 17, 4500 Gives</div>
+          </div>
+          <svg class="rdv-contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo"><span class="footer-logo-dot"></span>MFF KINÉGIVES</div>
+      <div class="footer-copy">© 2026 · Gives, Belgique · Tous droits réservés</div>
+      <div class="footer-links">
+        <a href="#">Mentions légales</a>
+        <a href="#">Confidentialité</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ───────── NAV PILL ─────────
+    const links = document.querySelectorAll('.nav-links a');
+    const pill  = document.getElementById('navPill');
+    const navEl = document.getElementById('nav');
+
+    function movePill(activeLink) {
+      const nav    = document.getElementById('navLinks');
+      if (!nav || !activeLink) return;
+      const navBox = nav.getBoundingClientRect();
+      const linkBox = activeLink.getBoundingClientRect();
+      pill.style.left  = (linkBox.left - navBox.left - 4 + nav.scrollLeft + 4) + 'px';
+      pill.style.width = linkBox.width + 'px';
+    }
+    function setActive(sectionId) {
+      links.forEach(a => a.classList.remove('active'));
+      const target = document.querySelector(`.nav-links a[data-section="${sectionId}"]`);
+      if (target) { target.classList.add('active'); movePill(target); }
+    }
+    window.addEventListener('load', () => {
+      const active = document.querySelector('.nav-links a.active');
+      if (active) movePill(active);
+    });
+    window.addEventListener('resize', () => {
+      const active = document.querySelector('.nav-links a.active');
+      if (active) movePill(active);
+    });
+
+    // ───────── SCROLL SPY ─────────
+    const sections = ['hero', 'expertises', 'praticiens', 'cabinet', 'contact'];
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && sections.includes(entry.target.id)) {
+          setActive(entry.target.id);
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    links.forEach(a => {
+      a.addEventListener('click', () => {
+        links.forEach(l => l.classList.remove('active'));
+        a.classList.add('active');
+        movePill(a);
+      });
+    });
+
+    // ───────── NAV: cacher pendant le scroll, réapparaître à l'arrêt ─────────
+    let scrollIdleTimer = null;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      // Près du haut : toujours visible.
+      if (y <= 200) {
+        navEl.classList.remove('hidden');
+        clearTimeout(scrollIdleTimer);
+        return;
+      }
+      // En cours de scroll : masquer.
+      navEl.classList.add('hidden');
+      // Réafficher quand le scroll s'arrête (aucun event pendant 200ms).
+      clearTimeout(scrollIdleTimer);
+      scrollIdleTimer = setTimeout(() => {
+        navEl.classList.remove('hidden');
+      }, 200);
+    }, { passive: true });
+
+    // ───────── REVEAL ON SCROLL ─────────
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    // ───────── TODAY HIGHLIGHT ─────────
+    (function highlightToday() {
+      const d = new Date().getDay(); // 0 = Dimanche
+      const row = document.querySelector(`.hours-row[data-day="${d}"]`);
+      if (row) row.classList.add('today');
+    })();
+
+    // ───────── GALERIE PHOTOS INTERACTIVE ─────────
+    (function initGallery() {
+      const img      = document.getElementById('galleryImg');
+      const bg       = document.getElementById('galleryBg');
+      const hotspots = document.getElementById('galleryHotspots');
+      const titleEl  = document.getElementById('tourSceneTitle');
+      const descEl   = document.getElementById('tourSceneDesc');
+      const hintEl   = document.getElementById('galleryHint');
+      const indexEl  = document.getElementById('galleryIndex');
+      const prevBtn  = document.getElementById('galleryPrev');
+      const nextBtn  = document.getElementById('galleryNext');
+      const items    = Array.from(document.querySelectorAll('.rail-item'));
+      if (!img || !items.length) return;
+
+      const SCENES = {
+        'vue-ensemble': {
+          title: "Vue d'ensemble",
+          desc: "Nos espaces de soin séparés par des cabines. Cliquez sur une cabine pour la découvrir.",
+          src: 'photos/vue-ensemble.jpg',
+          overview: true,
+          next: 'consultation'
+        },
+        'cabine-1': {
+          title: 'Cabine 1',
+          desc: "Cabine de soin équipée : table, lampe infrarouge et matériel de rééducation à portée de main.",
+          src: 'photos/cabine-1.jpg',
+          prev: 'vue-ensemble',
+          next: 'cabine-2'
+        },
+        'cabine-2': {
+          title: 'Cabine 2',
+          desc: "Espace dédié au renforcement et à la rééducation, avec espalier et matériel de récupération.",
+          src: 'photos/cabine-2.jpg',
+          prev: 'cabine-1',
+          next: 'cabine-3'
+        },
+        'cabine-3': {
+          title: 'Cabine 3',
+          desc: "Cabine calme pour les soins individuels et le suivi post-opératoire.",
+          src: 'photos/cabine-3.jpg',
+          prev: 'cabine-2'
+        },
+        'consultation': {
+          title: 'Espace consultation',
+          desc: "Coin bilan et échange, lumineux, pour faire le point sur votre prise en charge.",
+          src: 'photos/consultation.jpg',
+          prev: 'vue-ensemble',
+          next: 'fitness'
+        },
+        'fitness': {
+          title: 'Salle de fitness',
+          desc: "Tapis, vélo, presse et espalier pour la rééducation active et le réentraînement à l'effort.",
+          src: 'photos/fitness.jpg',
+          prev: 'consultation'
+        }
+      };
+
+      const order = items.map(b => b.dataset.scene);
+      const total = String(order.length - 1).padStart(2, '0'); // 00 → 05
+      let current = null;
+
+      function show(id) {
+        const s = SCENES[id];
+        if (!s || id === current) return;
+        current = id;
+
+        // fondu : on précharge la nouvelle image avant de l'afficher
+        img.classList.add('is-swapping');
+        const next = new Image();
+        const swap = () => {
+          img.src = s.src;
+          img.alt = s.title;
+          if (bg) bg.style.backgroundImage = `url("${s.src}")`;
+          requestAnimationFrame(() => img.classList.remove('is-swapping'));
+        };
+        next.onload = swap;
+        next.onerror = swap; // on affiche quand même (utile tant que les fichiers ne sont pas déposés)
+        next.src = s.src;
+
+        if (titleEl) titleEl.textContent = s.title;
+        if (descEl)  descEl.textContent  = s.desc;
+        if (hotspots) hotspots.classList.toggle('is-visible', !!s.overview);
+        if (hintEl)  hintEl.style.opacity = s.overview ? '1' : '0';
+        if (indexEl) indexEl.textContent = String(order.indexOf(id)).padStart(2, '0') + ' / ' + total;
+
+        // Flèches : afficher selon la présence d'un précédent / suivant
+        if (prevBtn) {
+          prevBtn.classList.toggle('show', !!s.prev);
+          prevBtn.dataset.target = s.prev || '';
+        }
+        if (nextBtn) {
+          nextBtn.classList.toggle('show', !!s.next);
+          nextBtn.dataset.target = s.next || '';
+        }
+
+        items.forEach(b => {
+          const on = b.dataset.scene === id;
+          b.classList.toggle('active', on);
+          if (on) b.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+        });
+      }
+
+      // Clic sur une zone de la vue d'ensemble → cabine correspondante
+      if (hotspots) {
+        hotspots.querySelectorAll('.gallery-hotspot').forEach(h => {
+          h.addEventListener('click', () => show(h.dataset.goto));
+        });
+      }
+      // Vignettes du plateau
+      items.forEach(b => b.addEventListener('click', () => show(b.dataset.scene)));
+
+      // Flèches précédent / suivant
+      if (prevBtn) prevBtn.addEventListener('click', () => { if (prevBtn.dataset.target) show(prevBtn.dataset.target); });
+      if (nextBtn) nextBtn.addEventListener('click', () => { if (nextBtn.dataset.target) show(nextBtn.dataset.target); });
+
+      show('vue-ensemble');
+    })();
+  </script>
+</body>
+</html>
