@@ -415,60 +415,49 @@
     /* ─── EXPERTISE ─── */
     .expertise { background: var(--ivory); }
 
-    .cards {
+    /* Grille compacte des domaines d'expertise */
+    .expertise-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 14px;
     }
-    .card {
-      position: relative;
+    .exp-card {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 16px;
+      align-items: center;
       background: var(--cream);
       border: 1px solid transparent;
-      border-radius: var(--radius-lg);
-      padding: 40px 32px 36px;
-      transition: transform 0.4s var(--ease), background 0.3s, border-color 0.3s;
-      overflow: hidden;
+      border-radius: 18px;
+      padding: 20px 22px;
+      transition: transform 0.4s var(--ease), background 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--plum-300, var(--plum-400)), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .card:hover {
-      transform: translateY(-6px);
+    .exp-card:hover {
+      transform: translateY(-4px);
       background: var(--plum-50);
       border-color: var(--plum-200);
+      box-shadow: var(--shadow-sm);
     }
-    .card:hover::before { opacity: 1; }
+    .exp-card-wide { grid-column: 1 / -1; }
+    .exp-card-wide .exp-ico { align-self: center; }
 
-    .card-num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--plum-600);
-      letter-spacing: 0.1em;
-      margin-bottom: 40px;
-    }
-    .card-icon {
-      width: 52px; height: 52px;
-      border-radius: 14px;
+    .exp-ico {
+      width: 48px; height: 48px;
+      border-radius: 13px;
       background: var(--ivory);
       border: 1px solid var(--plum-200);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 24px;
-      transition: background 0.3s, transform 0.3s var(--ease);
+      flex-shrink: 0;
+      transition: background 0.3s, transform 0.35s var(--ease), border-color 0.3s;
     }
-    .card:hover .card-icon {
+    .exp-card:hover .exp-ico {
       background: var(--plum-700);
       border-color: var(--plum-700);
-      transform: rotate(-4deg);
+      transform: rotate(-5deg);
     }
-    .card-icon svg {
+    .exp-ico svg {
       width: 22px; height: 22px;
       stroke: var(--plum-700);
       fill: none;
@@ -477,43 +466,22 @@
       stroke-linejoin: round;
       transition: stroke 0.3s;
     }
-    .card:hover .card-icon svg { stroke: var(--ivory); }
+    .exp-card:hover .exp-ico svg { stroke: var(--ivory); }
 
-    .card h3 {
-      font-size: 26px;
-      font-weight: 500;
-      margin-bottom: 10px;
+    .exp-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
       color: var(--plum-900);
+      line-height: 1.25;
+      letter-spacing: -0.005em;
+      margin-bottom: 3px;
     }
-    .card p {
-      font-size: 14px;
+    .exp-sub {
+      font-size: 13px;
       color: var(--ink-soft);
-      line-height: 1.6;
+      line-height: 1.45;
       font-weight: 300;
-      margin-bottom: 20px;
-    }
-    .card-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-top: 16px;
-      padding-top: 20px;
-      border-top: 1px dashed var(--plum-200);
-    }
-    .card-list li {
-      list-style: none;
-      font-size: 12px;
-      color: var(--ink-soft);
-      font-family: 'JetBrains Mono', monospace;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .card-list li::before {
-      content: '';
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: var(--plum-500);
     }
 
     /* ─── PRATICIENS ─── */
@@ -755,9 +723,9 @@
     }
     .gallery-hotspot-label {
       position: absolute;
-      top: 50%;
-      left: 56px;
-      transform: translateY(-50%);
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
       background: rgba(26, 18, 23, 0.9);
       backdrop-filter: blur(8px);
       color: var(--ivory);
@@ -773,8 +741,9 @@
     }
     .gallery-hotspot:hover .gallery-hotspot-label {
       opacity: 1;
-      transform: translateY(-50%) translateX(4px);
+      transform: translateX(-50%) translateY(0);
     }
+    .gallery-hotspot:hover { z-index: 10; }
 
     /* Légende cinématique */
     .gallery-caption {
@@ -1527,7 +1496,7 @@
       .hero-strip-inner { grid-template-columns: repeat(2, 1fr); }
       .section-head { grid-template-columns: 1fr; gap: 20px; }
       .section-head p { justify-self: start; }
-      .cards { grid-template-columns: 1fr; }
+      .expertise-grid { grid-template-columns: 1fr 1fr; }
       .praticiens-grid { grid-template-columns: 1fr; }
       .praticien { grid-template-columns: 1fr; }
       .praticien-photo { min-height: 320px; }
@@ -1565,6 +1534,7 @@
       .rdv { padding: 80px 20px; }
       .hero-inner { padding-top: 118px; }
       .hero-strip-inner { grid-template-columns: 1fr; }
+      .expertise-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
       nav { padding: 6px 6px 6px 16px; }
       .footer-inner { flex-direction: column; text-align: center; }
@@ -1705,52 +1675,81 @@
     <div class="container">
       <div class="section-head">
         <div class="reveal">
-          <span class="eyebrow">Domaines de soins</span>
-          <h2>Une pratique complète, <em>au service de chaque patient.</em></h2>
+          <span class="eyebrow">Domaines d'expertise</span>
+          <h2>Une prise en charge <em>complète et variée.</em></h2>
         </div>
+        <p class="reveal reveal-delay-1">De la rééducation orthopédique au drainage lymphatique, le cabinet couvre un large éventail de soins — pour tous les âges.</p>
       </div>
 
-      <div class="cards">
-        <div class="card reveal">
-          <div class="card-num">01 / Respiratoire</div>
-          <div class="card-icon">
+      <div class="expertise-grid">
+        <div class="exp-card reveal">
+          <div class="exp-ico">
+            <svg viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2m4 5V4a2 2 0 0 0-2-2 2 2 0 0 0-2 2v2m0 0V3a2 2 0 0 0-2-2 2 2 0 0 0-2 2v11m0-5V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v9a6 6 0 0 0 6 6h2a6 6 0 0 0 6-6"/></svg>
+          </div>
+          <div class="exp-body">
+            <h3 class="exp-title">Kinésithérapie générale</h3>
+            <p class="exp-sub">Prise en charge globale, sur mesure.</p>
+          </div>
+        </div>
+
+        <div class="exp-card reveal reveal-delay-1">
+          <div class="exp-ico">
+            <svg viewBox="0 0 24 24"><path d="M17 10c.7-.7 1.69 0 2.5 0a2.5 2.5 0 1 0 0-5 .5.5 0 0 1-.5-.5 2.5 2.5 0 1 0-5 0c0 .81.7 1.8 0 2.5l-7 7c-.7.7-1.69 0-2.5 0a2.5 2.5 0 0 0 0 5c.28 0 .5.22.5.5a2.5 2.5 0 1 0 5 0c0-.81-.7-1.8 0-2.5Z"/></svg>
+          </div>
+          <div class="exp-body">
+            <h3 class="exp-title">Orthopédie &amp; traumatologie</h3>
+            <p class="exp-sub">Après fracture, opération ou blessure.</p>
+          </div>
+        </div>
+
+        <div class="exp-card reveal reveal-delay-2">
+          <div class="exp-ico">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><path d="m9 20 3-6 3 6"/><path d="m6 8 6 2 6-2"/><path d="M12 10v4"/></svg>
+          </div>
+          <div class="exp-body">
+            <h3 class="exp-title">Troubles musculo-squelettiques</h3>
+            <p class="exp-sub">Dos, articulations et tendons.</p>
+          </div>
+        </div>
+
+        <div class="exp-card reveal">
+          <div class="exp-ico">
+            <svg viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/></svg>
+          </div>
+          <div class="exp-body">
+            <h3 class="exp-title">Douleurs chroniques</h3>
+            <p class="exp-sub">Soulagement et suivi durable.</p>
+          </div>
+        </div>
+
+        <div class="exp-card reveal reveal-delay-1">
+          <div class="exp-ico">
+            <svg viewBox="0 0 24 24"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 4.9 7 3.2c-.29 1.7-1.14 2.93-2.29 3.86S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></svg>
+          </div>
+          <div class="exp-body">
+            <h3 class="exp-title">Drainage lymphatique</h3>
+            <p class="exp-sub">Œdèmes et récupération.</p>
+          </div>
+        </div>
+
+        <div class="exp-card reveal reveal-delay-2">
+          <div class="exp-ico">
             <svg viewBox="0 0 24 24"><path d="M12 4v16M7 9c-2 3-2 6 0 9M17 9c2 3 2 6 0 9M5 12h14"/></svg>
           </div>
-          <h3>Kiné respiratoire</h3>
-          <p>Pour les nourrissons, enfants et adultes. Drainage bronchique, aérosols et rééducation ventilatoire.</p>
-          <ul class="card-list">
-            <li>Bronchiolites</li>
-            <li>BPCO &amp; asthme</li>
-            <li>Post-hospitalisation</li>
-          </ul>
+          <div class="exp-body">
+            <h3 class="exp-title">Kiné respiratoire</h3>
+            <p class="exp-sub">Nourrissons, enfants et adultes.</p>
+          </div>
         </div>
 
-        <div class="card reveal reveal-delay-1">
-          <div class="card-num">02 / Rééducation</div>
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+        <div class="exp-card exp-card-wide reveal">
+          <div class="exp-ico">
+            <svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
           </div>
-          <h3>Rééducation</h3>
-          <p>Orthopédique, neurologique et post-opératoire. Récupération progressive, avec suivi personnalisé.</p>
-          <ul class="card-list">
-            <li>Post-chirurgie</li>
-            <li>Entorses &amp; fractures</li>
-            <li>AVC &amp; pathologies neuro</li>
-          </ul>
-        </div>
-
-        <div class="card reveal reveal-delay-2">
-          <div class="card-num">03 / Appareillage</div>
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          <div class="exp-body">
+            <h3 class="exp-title">Prévention &amp; autonomie · personne âgée</h3>
+            <p class="exp-sub">Équilibre, prévention des chutes et maintien de la mobilité.</p>
           </div>
-          <h3>Prothèses</h3>
-          <p>Accompagnement prothétique et appareillage. Reprise d'autonomie et travail en situation réelle.</p>
-          <ul class="card-list">
-            <li>Prothèses de hanche</li>
-            <li>Prothèses de genou</li>
-            <li>Suivi à long terme</li>
-          </ul>
         </div>
       </div>
     </div>
@@ -1778,10 +1777,7 @@
             <div class="praticien-role">Kinésithérapeute · Fondatrice</div>
             <h3>Marie-France Filée</h3>
             <p class="praticien-bio">
-              Installée à Gives, Marie-France accompagne ses patients avec une approche
-              rigoureuse et humaine. Elle intervient principalement en kinésithérapie
-              respiratoire, rééducation post-opératoire et appareillage prothétique —
-              avec un suivi continu à chaque étape.
+              Fort de 26 années d'expériences, mes objectifs sont de vous aider à retrouver mobilité, confiance et bien-être grâce à un accompagnement personnalisé et bienveillant. Avec une approche dynamique et empathique, j'accompagne mes patients dans leur rééducation, leur récupération et l'amélioration de leur bien-être au quotidien.
             </p>
             <div class="praticien-dipl">
               <div class="praticien-dipl-label">Formations &amp; spécialisations</div>
@@ -1818,15 +1814,15 @@
 
             <!-- Zones cliquables — visibles uniquement sur la vue d'ensemble -->
             <div class="gallery-hotspots is-visible" id="galleryHotspots">
-              <button class="gallery-hotspot" style="left:31%; top:40%; --rot:-3deg;" data-goto="cabine-1" aria-label="Voir la cabine 1">
+              <button class="gallery-hotspot" style="left:31%; top:41.8%; --rot:-8deg;" data-goto="cabine-1" aria-label="Voir la cabine 1">
                 <span class="gh-num">1</span>
                 <span class="gallery-hotspot-label">Cabine 1</span>
               </button>
-              <button class="gallery-hotspot" style="left:57%; top:38.6%; --rot:-3deg;" data-goto="cabine-2" aria-label="Voir la cabine 2">
+              <button class="gallery-hotspot" style="left:57%; top:38.5%; --rot:-8deg;" data-goto="cabine-2" aria-label="Voir la cabine 2">
                 <span class="gh-num">2</span>
                 <span class="gallery-hotspot-label">Cabine 2</span>
               </button>
-              <button class="gallery-hotspot" style="left:84%; top:37.2%; --rot:-3deg;" data-goto="cabine-3" aria-label="Voir la cabine 3">
+              <button class="gallery-hotspot" style="left:84%; top:35.2%; --rot:-8deg;" data-goto="cabine-3" aria-label="Voir la cabine 3">
                 <span class="gh-num">3</span>
                 <span class="gallery-hotspot-label">Cabine 3</span>
               </button>
@@ -1892,7 +1888,7 @@
             <span class="rail-thumb"><img src="photos/consultation.jpg" alt="" loading="lazy" /></span>
             <span class="rail-text">
               <span class="rail-num">04</span>
-              <span class="rail-name">Consultation</span>
+              <span class="rail-name">Salle d'attente</span>
               <span class="rail-desc">Coin bilan & échange</span>
             </span>
           </button>
@@ -1900,7 +1896,7 @@
             <span class="rail-thumb"><img src="photos/fitness.jpg" alt="" loading="lazy" /></span>
             <span class="rail-text">
               <span class="rail-num">05</span>
-              <span class="rail-name">Salle de fitness</span>
+              <span class="rail-name">Plateau technique</span>
               <span class="rail-desc">Réentraînement à l'effort</span>
             </span>
           </button>
@@ -1909,16 +1905,14 @@
 
       <div class="cabinet-info reveal">
         <div>
-          <h3>Pensé comme un espace de soin, pas une salle d'attente.</h3>
-          <p>
-            Au cœur de Gives, le cabinet propose trois espaces dédiés — une salle principale
-            lumineuse équipée pour la rééducation, une salle dédiée à la kiné respiratoire,
-            et un espace d'accueil apaisant.
-          </p>
-          <p>
-            Chaque détail — acoustique, lumière, matériel — a été choisi pour que vous vous
-            sentiez en confiance dès votre arrivée.
-          </p>
+          <h3>Le cabinet</h3>
+          <div>
+            <p>Afin de vous accompagner dans les meilleures conditions, le cabinet met à votre disposition des équipements complets et modernes. L'espace de soins s'articule autour de deux pôles :</p>
+            <ul>
+              <li><p><b>Un plateau technique dédié à la rééducation active :</b> équipé d'un tapis de course, d'un vélo, d'un banc de musculation, d'espaliers, ainsi que de matériel spécifique pour le travail de la proprioception et de l'équilibre.</p></li>
+              <li><p><b>Des équipements de pointe pour les soins spécifiques :</b> pour optimiser votre récupération et soulager vos douleurs, je dispose d'appareils à ondes de choc, de bottes de pressothérapie, d'une vibrosphère, d'un pistolet de massage (Theragun) et de matériel d'électrothérapie.</p></li>
+            </ul>
+          </div>
         </div>
         <div class="cabinet-features">
           <div class="feature">
@@ -1945,7 +1939,16 @@
             </div>
             <div>
               <div class="feature-title">Approche humaine</div>
-              <div class="feature-desc">Temps long, écoute, rythme respecté.</div>
+              <div class="feature-desc">Ambiance bienveillante, écoute, rythme respecté.</div>
+            </div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24"><path d="M9.59 4.59A2 2 0 1 1 11 8H2M12.59 19.41A2 2 0 1 0 14 16H2M17.73 7.73A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+            </div>
+            <div>
+              <div class="feature-title">Cabinet climatisé</div>
+              <div class="feature-desc">Une température agréable en toute saison, pour votre confort pendant les soins.</div>
             </div>
           </div>
         </div>
@@ -2015,30 +2018,52 @@
         <span class="eyebrow reveal">Contact</span>
         <h2 class="reveal">Prenez rendez-vous <em>dès aujourd'hui.</em></h2>
         <p class="reveal reveal-delay-1">
-          Par téléphone ou par email — nous vous répondons rapidement pour caler
+          Par téléphone, SMS, Whatsapp, Messenger ou encore par email — nous vous répondons rapidement pour caler
           un premier créneau.
         </p>
       </div>
 
       <div class="rdv-contacts">
-        <a href="tel:+3204123456" class="rdv-contact reveal reveal-delay-1">
+        <a href="tel:+32496364029" class="rdv-contact reveal reveal-delay-1">
           <div class="rdv-contact-ico">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.86a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/></svg>
           </div>
           <div>
             <div class="rdv-contact-label">Téléphone</div>
-            <div class="rdv-contact-value">+32 4 123 45 67</div>
+            <div class="rdv-contact-value">+32 496 36 40 29</div>
           </div>
           <svg class="rdv-contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
 
-        <a href="mailto:contact@mff-kinegives.be" class="rdv-contact reveal reveal-delay-2">
+        <a href="mailto:mff.kinegives@gmail.com" class="rdv-contact reveal reveal-delay-2">
           <div class="rdv-contact-ico">
             <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
           <div>
             <div class="rdv-contact-label">Email</div>
-            <div class="rdv-contact-value">contact@mff-kinegives.be</div>
+            <div class="rdv-contact-value">mff.kinegives@gmail.com</div>
+          </div>
+          <svg class="rdv-contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+
+        <a href="https://wa.me/32496364029" target="_blank" rel="noopener" class="rdv-contact reveal reveal-delay-2">
+          <div class="rdv-contact-ico">
+            <svg viewBox="0 0 24 24" style="fill:currentColor;stroke:none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.15-.174.2-.298.3-.497.099-.198.05-.371-.05-.52-.099-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.052 3.133 4.977 4.27 2.925 1.135 2.925.756 3.451.71.526-.05 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.994.573 3.847 1.554 5.415L2.5 21.5l4.318-1.135a9.83 9.83 0 0 0 5.222 1.499c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2z"/></svg>
+          </div>
+          <div>
+            <div class="rdv-contact-label">WhatsApp</div>
+            <div class="rdv-contact-value">+32 496 36 40 29</div>
+          </div>
+          <svg class="rdv-contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+
+        <a href="https://www.facebook.com/mariefrance.filee" target="_blank" rel="noopener" class="rdv-contact reveal reveal-delay-2">
+          <div class="rdv-contact-ico">
+            <svg viewBox="0 0 36 36" style="fill:currentColor;stroke:none"><path d="M18 0C7.85 0 0 7.396 0 17.5c0 5.297 2.163 9.933 5.68 13.12.28.25.45.605.46.985l.093 3.05c.03.973 1.03 1.6 1.912 1.196l3.4-1.55c.29-.13.617-.155.923-.07C14.24 34.766 16.09 35 18 35c10.15 0 18-7.396 18-17.5S28.15 0 18 0z"/><path d="M8 22.53l5.28-8.377c.847-1.343 2.65-1.673 3.912-.716l4.19 3.14a1.5 1.5 0 0 0 1.807 0l5.673-4.303c.756-.573 1.75.35 1.24 1.157L24.83 21.81c-.847 1.343-2.65 1.673-3.912.716l-4.19-3.14a1.5 1.5 0 0 0-1.807 0L9.24 23.688c-.756.573-1.75-.35-1.24-1.158z" style="fill:var(--plum-700)"/></svg>
+          </div>
+          <div>
+            <div class="rdv-contact-label">Messenger</div>
+            <div class="rdv-contact-value">Marie-France Filée</div>
           </div>
           <svg class="rdv-contact-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
@@ -2198,14 +2223,14 @@
           prev: 'cabine-2'
         },
         'consultation': {
-          title: 'Espace consultation',
+          title: "Salle d'attente",
           desc: "Coin bilan et échange, lumineux, pour faire le point sur votre prise en charge.",
           src: 'photos/consultation.jpg',
           prev: 'vue-ensemble',
           next: 'fitness'
         },
         'fitness': {
-          title: 'Salle de fitness',
+          title: 'Plateau technique',
           desc: "Tapis, vélo, presse et espalier pour la rééducation active et le réentraînement à l'effort.",
           src: 'photos/fitness.jpg',
           prev: 'consultation'
