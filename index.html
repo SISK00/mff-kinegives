@@ -172,6 +172,94 @@
     .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
     .nav-cta svg { width: 12px; height: 12px; }
 
+    /* ─── HAMBURGER + MENU MOBILE ─── */
+    .nav-toggle {
+      display: none;
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav-toggle span {
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 17px; height: 1.6px;
+      background: var(--ivory);
+      border-radius: 2px;
+      transition: transform 0.35s var(--ease), opacity 0.2s var(--ease);
+    }
+    .nav-toggle span:nth-child(1) { transform: translate(-50%, -6px); }
+    .nav-toggle span:nth-child(2) { transform: translate(-50%, -50%); }
+    .nav-toggle span:nth-child(3) { transform: translate(-50%, 4px); }
+    body.menu-open .nav-toggle span:nth-child(1) { transform: translate(-50%, -50%) rotate(45deg); }
+    body.menu-open .nav-toggle span:nth-child(2) { opacity: 0; }
+    body.menu-open .nav-toggle span:nth-child(3) { transform: translate(-50%, -50%) rotate(-45deg); }
+
+    .nav-menu {
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: rgba(26, 18, 23, 0.94);
+      backdrop-filter: blur(26px) saturate(160%);
+      -webkit-backdrop-filter: blur(26px) saturate(160%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s var(--ease), visibility 0.4s var(--ease);
+    }
+    body.menu-open .nav-menu { opacity: 1; visibility: visible; }
+    .nav-menu-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .nav-menu-links a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(30px, 9vw, 40px);
+      font-weight: 500;
+      color: var(--ivory);
+      text-decoration: none;
+      padding: 10px 22px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: color 0.2s, opacity 0.5s var(--ease), transform 0.5s var(--ease);
+    }
+    .nav-menu-links a.active { color: var(--plum-400); }
+    body.menu-open .nav-menu-links a { opacity: 1; transform: translateY(0); }
+    body.menu-open .nav-menu-links a:nth-child(1) { transition-delay: 0.06s; }
+    body.menu-open .nav-menu-links a:nth-child(2) { transition-delay: 0.12s; }
+    body.menu-open .nav-menu-links a:nth-child(3) { transition-delay: 0.18s; }
+    body.menu-open .nav-menu-links a:nth-child(4) { transition-delay: 0.24s; }
+    body.menu-open .nav-menu-links a:nth-child(5) { transition-delay: 0.30s; }
+    .nav-menu-cta {
+      margin-top: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--ivory);
+      color: var(--plum-900);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 15px;
+      padding: 15px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+    }
+    body.menu-open .nav-menu-cta { opacity: 1; transform: translateY(0); transition-delay: 0.36s; }
+    .nav-menu-cta svg { width: 15px; height: 15px; }
+
     /* ─── HERO ─── */
     .hero {
       position: relative;
@@ -1501,12 +1589,25 @@
     @media (max-width: 600px) {
       section.content { padding: 72px 20px; }
       .rdv { padding: 80px 20px; }
-      .hero-inner { padding-top: 118px; }
-      .hero-strip-inner { grid-template-columns: 1fr; }
+      .hero-inner { padding: 112px 20px 140px; }
+      .hero h1 { font-size: clamp(38px, 11.5vw, 54px); }
+      .hero-lede { font-size: 15.5px; margin-bottom: 28px; }
+      .hero-strip { padding: 0 14px 14px; }
+      .hero-strip-inner { grid-template-columns: 1fr 1fr; border-radius: 14px; box-shadow: 0 12px 30px rgba(0,0,0,0.28); }
+      .hero-strip-cell { padding: 10px 12px; gap: 1px; }
+      .hero-strip-cell.accent { gap: 9px; }
+      .hero-strip-label { font-size: 8.5px; letter-spacing: 0.1em; }
+      .hero-strip-value { font-size: 12px; }
+      .hero-strip-sub { font-size: 9.5px; }
       .expertise-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      nav { padding: 6px 6px 6px 16px; }
       .footer-inner { flex-direction: column; text-align: center; }
+    }
+    /* Bascule navigation → hamburger (grands téléphones inclus) */
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .nav-toggle { display: block; }
+      nav { padding: 6px 6px 6px 18px; }
     }
 
     /* ─── PRESS FEEDBACK ─── */
@@ -1575,7 +1676,25 @@
       Prendre RDV
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navMenu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- MENU MOBILE -->
+  <div class="nav-menu" id="navMenu" aria-hidden="true">
+    <nav class="nav-menu-links">
+      <a href="#hero" data-section="hero">Accueil</a>
+      <a href="#expertises" data-section="expertises">Soins</a>
+      <a href="#praticiens" data-section="praticiens">Praticienne</a>
+      <a href="#cabinet" data-section="cabinet">Cabinet</a>
+      <a href="#contact" data-section="contact">Contact</a>
+    </nav>
+    <a href="#contact" class="nav-menu-cta">
+      Prendre rendez-vous
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
 
   <!-- HERO -->
   <section class="hero" id="hero">
@@ -2071,7 +2190,30 @@
       links.forEach(a => a.classList.remove('active'));
       const target = document.querySelector(`.nav-links a[data-section="${sectionId}"]`);
       if (target) { target.classList.add('active'); movePill(target); }
+      // Menu mobile : même surbrillance de section active
+      document.querySelectorAll('.nav-menu-links a').forEach(a => {
+        a.classList.toggle('active', a.dataset.section === sectionId);
+      });
     }
+
+    // ───────── MENU MOBILE (hamburger) ─────────
+    (function initMobileMenu() {
+      const toggle = document.getElementById('navToggle');
+      const menu   = document.getElementById('navMenu');
+      if (!toggle || !menu) return;
+      function setOpen(open) {
+        document.body.classList.toggle('menu-open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+        menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+        document.body.style.overflow = open ? 'hidden' : '';
+      }
+      toggle.addEventListener('click', () => setOpen(!document.body.classList.contains('menu-open')));
+      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+      window.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+      // Sécurité : si on repasse en desktop, on ferme le menu
+      window.matchMedia('(min-width: 601px)').addEventListener('change', e => { if (e.matches) setOpen(false); });
+    })();
     window.addEventListener('load', () => {
       const active = document.querySelector('.nav-links a.active');
       if (active) movePill(active);
