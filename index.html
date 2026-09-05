@@ -526,11 +526,14 @@
 
     /* Grille compacte des domaines d'expertise */
     .expertise-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 14px;
     }
     .exp-card {
+      flex: 0 1 calc(33.333% - 10px);
+      min-width: 240px;
       display: grid;
       grid-template-columns: 48px 1fr;
       gap: 16px;
@@ -547,8 +550,6 @@
       border-color: var(--plum-200);
       box-shadow: var(--shadow-sm);
     }
-    .exp-card-wide { grid-column: 1 / -1; }
-    .exp-card-wide .exp-ico { align-self: center; }
 
     .exp-ico {
       width: 48px; height: 48px;
@@ -1760,19 +1761,19 @@
         </div>
         <div class="hero-strip-cell">
           <span class="hero-strip-label">Au cabinet</span>
-          <span class="hero-strip-value">9:00–11:30 / 17:00–20:00</span>
-          <span class="hero-strip-sub">sur rendez-vous</span>
+          <span class="hero-strip-value">8h30–10h / 17h–19h30</span>
+          <span class="hero-strip-sub">lun · mer · ven</span>
         </div>
         <div class="hero-strip-cell">
           <span class="hero-strip-label">À domicile</span>
-          <span class="hero-strip-value">11:30 – 17:00</span>
-          <span class="hero-strip-sub">sur rendez-vous</span>
+          <span class="hero-strip-value">8h30 – 19h</span>
+          <span class="hero-strip-sub">mar · jeu &amp; entre les plages</span>
         </div>
         <div class="hero-strip-cell accent">
           <span class="hero-strip-dot"></span>
-          <span>
-            <span class="hero-strip-label">Statut</span>
-            <span class="hero-strip-value">INAMI agréée</span>
+          <span style="display:flex;flex-direction:column;gap:2px;min-width:0">
+            <span class="hero-strip-value">Prestataire agréée INAMI</span>
+            <span class="hero-strip-sub">Statut : conventionnée</span>
           </span>
         </div>
       </div>
@@ -1850,7 +1851,7 @@
           </div>
         </div>
 
-        <div class="exp-card exp-card-wide reveal">
+        <div class="exp-card reveal">
           <div class="exp-ico">
             <svg viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
           </div>
@@ -1869,7 +1870,7 @@
       <div class="section-head">
         <div class="reveal">
           <span class="eyebrow">Votre kiné</span>
-          <h2>Une praticienne, <em>un suivi dédié.</em></h2>
+          <h2>Une kinésithérapeute à votre écoute, <em>un suivi sur mesure.</em></h2>
         </div>
         <p class="reveal reveal-delay-1" hidden></p>
       </div>
@@ -1878,14 +1879,13 @@
 
         <article class="praticien reveal">
           <div class="praticien-photo">
-            <span class="praticien-tag"><span class="praticien-tag-dot"></span>INAMI agréée</span>
             <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80" alt="Portrait de Marie-France Filée" />
           </div>
           <div class="praticien-body">
             <div class="praticien-role">Kinésithérapeute · Fondatrice</div>
             <h3>Marie-France Filée</h3>
             <p class="praticien-bio">
-              Fort de 26 années d'expériences, mes objectifs sont de vous aider à retrouver mobilité, confiance et bien-être grâce à un accompagnement personnalisé et bienveillant. Avec une approche dynamique et empathique, j'accompagne mes patients dans leur rééducation, leur récupération et l'amélioration de leur bien-être au quotidien.
+              Forte de 26 années d'expériences, mes objectifs sont de vous aider à retrouver mobilité, confiance et bien-être grâce à un accompagnement personnalisé et bienveillant. Avec une approche dynamique et empathique, j'accompagne mes patients dans leur rééducation, leur récupération et l'amélioration de leur bien-être au quotidien.
             </p>
           </div>
         </article>
@@ -1938,7 +1938,7 @@
             <div class="gallery-caption">
               <span class="tour-eyebrow">Le cabinet · Visite en images</span>
               <h4 id="tourSceneTitle">Vue d'ensemble</h4>
-              <p id="tourSceneDesc">Nos espaces de soin séparés par des cabines. Cliquez sur une cabine pour la découvrir.</p>
+              <p id="tourSceneDesc" style="display:none"></p>
             </div>
 
             <button class="gallery-nav prev" id="galleryPrev" type="button" aria-label="Vue précédente">
@@ -2010,7 +2010,7 @@
             <p>Afin de vous accompagner dans les meilleures conditions, le cabinet met à votre disposition des équipements complets et modernes. L'espace de soins s'articule autour de deux pôles :</p>
             <ul>
               <li><p><b>Un plateau technique dédié à la rééducation active :</b> équipé d'un tapis de course, d'un vélo, d'un banc de musculation, d'espaliers, ainsi que de matériel spécifique pour le travail de la proprioception et de l'équilibre.</p></li>
-              <li><p><b>Des équipements de pointe pour les soins spécifiques :</b> pour optimiser votre récupération et soulager vos douleurs, je dispose d'appareils à ondes de choc, de bottes de pressothérapie, d'une vibrosphère, d'un pistolet de massage (Theragun) et de matériel d'électrothérapie.</p></li>
+              <li><p><b>Des équipements de pointe pour les soins spécifiques :</b> pour optimiser votre récupération et soulager vos douleurs, je dispose d'appareils à ondes de choc, de bottes de pressothérapie, d'une vibrosphère, d'une cryothérapie gazeuse, d'un pistolet de massage (Theragun) et de matériel d'électrothérapie (Compex, Tens, ...).</p></li>
             </ul>
           </div>
         </div>
@@ -2064,7 +2064,7 @@
           <span class="eyebrow reveal">Où nous trouver</span>
           <h2 class="reveal">Au cœur de Gives, <em>facilement accessible.</em></h2>
           <p class="reveal reveal-delay-1">
-            Stationnement gratuit devant le cabinet et à proximité immédiate des axes principaux.
+            Stationnement gratuit devant le cabinet et à proximité immédiate des axes principaux (sur la place de l'église).
           </p>
 
           <div class="address-card reveal reveal-delay-1">
@@ -2076,17 +2076,17 @@
           <div class="hours-card reveal reveal-delay-2" id="hoursCard">
             <div class="hours-card-label">Horaires — cabinet &amp; domicile</div>
             <div class="hours-list" id="hoursList">
-              <div class="hours-row" data-day="1"><span class="hours-day">Lundi</span><span class="hours-time">9:00–11:30 · 17:00–20:00</span></div>
-              <div class="hours-row" data-day="2"><span class="hours-day">Mardi</span><span class="hours-time">9:00–11:30 · 17:00–20:00</span></div>
-              <div class="hours-row" data-day="3"><span class="hours-day">Mercredi</span><span class="hours-time">9:00–11:30 · 17:00–20:00</span></div>
-              <div class="hours-row" data-day="4"><span class="hours-day">Jeudi</span><span class="hours-time">9:00–11:30 · 17:00–20:00</span></div>
-              <div class="hours-row" data-day="5"><span class="hours-day">Vendredi</span><span class="hours-time">9:00–11:30 · 17:00–20:00</span></div>
+              <div class="hours-row" data-day="1"><span class="hours-day">Lundi</span><span class="hours-time">8h30–10h · 17h–19h30</span></div>
+              <div class="hours-row" data-day="2"><span class="hours-day">Mardi</span><span class="hours-time">8h30–19h · domicile</span></div>
+              <div class="hours-row" data-day="3"><span class="hours-day">Mercredi</span><span class="hours-time">8h30–10h · 17h–19h30</span></div>
+              <div class="hours-row" data-day="4"><span class="hours-day">Jeudi</span><span class="hours-time">8h30–19h · domicile</span></div>
+              <div class="hours-row" data-day="5"><span class="hours-day">Vendredi</span><span class="hours-time">8h30–10h · 17h–19h30</span></div>
               <div class="hours-row closed" data-day="6"><span class="hours-day">Samedi</span><span class="hours-time">/</span></div>
               <div class="hours-row closed" data-day="0"><span class="hours-day">Dimanche</span><span class="hours-time">/</span></div>
             </div>
             <div class="hours-note">
               <span class="hours-note-dot"></span>
-              En dehors de ces plages, je me déplace à domicile (11:30–17:00).
+              Lundi, mercredi &amp; vendredi : cabinet aux heures indiquées, à domicile entre les deux plages. Mardi &amp; jeudi : à domicile et à la Résidence Les Prés Brion.
             </div>
           </div>
 
@@ -2118,8 +2118,8 @@
         <span class="eyebrow reveal">Contact</span>
         <h2 class="reveal">Prenez rendez-vous <em>dès aujourd'hui.</em></h2>
         <p class="reveal reveal-delay-1">
-          Par téléphone, SMS, Whatsapp, Messenger ou encore par email — nous vous répondons rapidement pour caler
-          un premier créneau.
+          Par téléphone, SMS, WhatsApp, Messenger ou encore par email. N'hésitez pas à me contacter pour plus
+          d'informations et/ou pour prendre un rendez-vous.
         </p>
       </div>
 
@@ -2340,34 +2340,34 @@
       const SCENES = {
         'vue-ensemble': {
           title: "Vue d'ensemble",
-          desc: "Nos espaces de soin séparés par des cabines. Cliquez sur une cabine pour la découvrir.",
+          desc: "",
           src: 'photos/vue-ensemble.jpg',
           overview: true,
           next: 'consultation'
         },
         'cabine-1': {
           title: 'Cabine 1',
-          desc: "Cabine de soin équipée : table, lampe infrarouge et matériel de rééducation à portée de main.",
+          desc: "",
           src: 'photos/cabine-1.jpg',
           prev: 'vue-ensemble',
           next: 'cabine-2'
         },
         'cabine-2': {
           title: 'Cabine 2',
-          desc: "Espace dédié au renforcement et à la rééducation, avec espalier et matériel de récupération.",
+          desc: "",
           src: 'photos/cabine-2.jpg',
           prev: 'cabine-1',
           next: 'cabine-3'
         },
         'cabine-3': {
           title: 'Cabine 3',
-          desc: "Cabine calme pour les soins individuels et le suivi post-opératoire.",
+          desc: "",
           src: 'photos/cabine-3.jpg',
           prev: 'cabine-2'
         },
         'consultation': {
           title: "Salle d'attente",
-          desc: "Coin bilan et échange, lumineux, pour faire le point sur votre prise en charge.",
+          desc: "",
           src: 'photos/consultation.jpg',
           prev: 'vue-ensemble',
           next: 'fitness'
@@ -2417,7 +2417,7 @@
         next.src = s.src;
 
         if (titleEl) titleEl.textContent = s.title;
-        if (descEl)  descEl.textContent  = s.desc;
+        if (descEl) { descEl.textContent = s.desc || ''; descEl.style.display = s.desc ? '' : 'none'; }
         if (hotspots) hotspots.classList.toggle('is-visible', !!s.overview);
         if (hintEl)  hintEl.style.opacity = s.overview ? '1' : '0';
         if (indexEl) indexEl.textContent = String(order.indexOf(id)).padStart(2, '0') + ' / ' + total;
