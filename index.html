@@ -2355,6 +2355,20 @@
       const order = items.map(b => b.dataset.scene);
       const total = String(order.length - 1).padStart(2, '0'); // 00 → 05
       let current = null;
+      let booting = true; // évite tout défilement de page au chargement
+
+      // Défile UNIQUEMENT le rail (jamais la page) pour centrer la vignette active
+      function scrollRailTo(el) {
+        const rail = document.getElementById('galleryRail');
+        if (!rail) return;
+        const railRect = rail.getBoundingClientRect();
+        const elRect = el.getBoundingClientRect();
+        if (rail.scrollWidth > rail.clientWidth + 4) {
+          rail.scrollBy({ left: (elRect.left - railRect.left) - (rail.clientWidth - el.clientWidth) / 2, behavior: 'smooth' });
+        } else {
+          rail.scrollBy({ top: (elRect.top - railRect.top) - (rail.clientHeight - el.clientHeight) / 2, behavior: 'smooth' });
+        }
+      }
 
       function show(id) {
         const s = SCENES[id];
@@ -2393,7 +2407,7 @@
         items.forEach(b => {
           const on = b.dataset.scene === id;
           b.classList.toggle('active', on);
-          if (on) b.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+          if (on && !booting) scrollRailTo(b);
         });
       }
 
@@ -2411,6 +2425,7 @@
       if (nextBtn) nextBtn.addEventListener('click', () => { if (nextBtn.dataset.target) show(nextBtn.dataset.target); });
 
       show('vue-ensemble');
+      booting = false;
     })();
   </script>
 </body>
