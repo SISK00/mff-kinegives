@@ -550,9 +550,10 @@
     }
 
     .praticien-body {
-      padding: 28px 28px 24px;
+      padding: 36px 34px;
       display: flex;
       flex-direction: column;
+      justify-content: center;
     }
     .praticien-role {
       font-family: 'JetBrains Mono', monospace;
@@ -569,44 +570,12 @@
       line-height: 1.05;
     }
     .praticien-bio {
-      font-size: 13.5px;
+      font-size: 14.5px;
       color: var(--ink-soft);
-      line-height: 1.65;
+      line-height: 1.7;
       font-weight: 300;
-      margin-bottom: 18px;
-    }
-    .praticien-dipl {
-      margin-top: auto;
-      padding-top: 16px;
-      border-top: 1px solid var(--plum-100);
-    }
-    .praticien-dipl-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .praticien-dipl ul {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      list-style: none;
-    }
-    .praticien-dipl li {
-      font-size: 12.5px;
-      color: var(--ink-soft);
-      display: flex;
-      gap: 10px;
-      align-items: baseline;
-    }
-    .praticien-dipl li span:first-child {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--plum-600);
-      flex-shrink: 0;
-      width: 36px;
+      margin-bottom: 0;
+      max-width: 52ch;
     }
 
     /* ─── LE CABINET (galerie) ─── */
@@ -1628,8 +1597,7 @@
         <span class="reveal-word" style="animation-delay:0.65s">rythme.</span>
       </h1>
       <p class="hero-lede">
-        Un cabinet à taille humaine où chaque prise en charge est pensée sur mesure —
-        rééducation, kiné respiratoire et suivi post-opératoire.
+        Un cabinet à taille humaine où chaque prise en charge est pensée sur mesure, adaptée à vos besoins et à votre rythme.
       </p>
       <div class="hero-actions">
         <a href="#contact" class="btn-primary">
@@ -1678,7 +1646,6 @@
           <span class="eyebrow">Domaines d'expertise</span>
           <h2>Une prise en charge <em>complète et variée.</em></h2>
         </div>
-        <p class="reveal reveal-delay-1">De la rééducation orthopédique au drainage lymphatique, le cabinet couvre un large éventail de soins — pour tous les âges.</p>
       </div>
 
       <div class="expertise-grid">
@@ -1779,14 +1746,6 @@
             <p class="praticien-bio">
               Fort de 26 années d'expériences, mes objectifs sont de vous aider à retrouver mobilité, confiance et bien-être grâce à un accompagnement personnalisé et bienveillant. Avec une approche dynamique et empathique, j'accompagne mes patients dans leur rééducation, leur récupération et l'amélioration de leur bien-être au quotidien.
             </p>
-            <div class="praticien-dipl">
-              <div class="praticien-dipl-label">Formations &amp; spécialisations</div>
-              <ul>
-                <li><span>—</span><span>Master en kinésithérapie</span></li>
-                <li><span>—</span><span>Kiné respiratoire &amp; cryothérapie</span></li>
-                <li><span>—</span><span>Rééducation post-opératoire</span></li>
-              </ul>
-            </div>
           </div>
         </article>
 
@@ -2123,23 +2082,37 @@
     });
 
     // ───────── SCROLL SPY ─────────
-    const sections = ['hero', 'expertises', 'praticiens', 'cabinet', 'contact'];
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && sections.includes(entry.target.id)) {
-          setActive(entry.target.id);
-        }
+    const sections = ['hero', 'expertises', 'praticiens', 'cabinet', 'location', 'contact'];
+    const sectionNavMap = { hero: 'hero', expertises: 'expertises', praticiens: 'praticiens', cabinet: 'cabinet', location: 'contact', contact: 'contact' };
+    let suppressSpyUntil = 0;
+    let spyTicking = false;
+    function updateActiveByCenter() {
+      if (suppressSpyUntil && Date.now() < suppressSpyUntil) return;
+      const centerY = window.scrollY + window.innerHeight / 2;
+      let closestId = null, closestDist = Infinity;
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const top = el.offsetTop, bottom = top + el.offsetHeight;
+        const mid = (top + bottom) / 2;
+        const dist = Math.abs(centerY - mid);
+        if (centerY >= top && centerY <= bottom) { closestId = id; closestDist = -1; }
+        else if (dist < closestDist) { closestDist = dist; closestId = id; }
       });
-    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+      if (closestId) setActive(sectionNavMap[closestId]);
+    }
+    window.addEventListener('scroll', () => {
+      if (spyTicking) return;
+      spyTicking = true;
+      requestAnimationFrame(() => { updateActiveByCenter(); spyTicking = false; });
+    }, { passive: true });
+    window.addEventListener('load', updateActiveByCenter);
     links.forEach(a => {
       a.addEventListener('click', () => {
         links.forEach(l => l.classList.remove('active'));
         a.classList.add('active');
         movePill(a);
+        suppressSpyUntil = Date.now() + 900;
       });
     });
 
