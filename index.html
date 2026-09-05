@@ -199,65 +199,65 @@
     body.menu-open .nav-toggle span:nth-child(2) { opacity: 0; }
     body.menu-open .nav-toggle span:nth-child(3) { transform: translate(-50%, -50%) rotate(-45deg); }
 
+    /* Panneau déroulant sous la barre (mobile) */
     .nav-menu {
       position: fixed;
-      inset: 0;
+      top: 74px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-10px) scale(0.98);
+      transform-origin: top center;
       z-index: 99;
-      background: rgba(26, 18, 23, 0.94);
-      backdrop-filter: blur(26px) saturate(160%);
-      -webkit-backdrop-filter: blur(26px) saturate(160%);
+      width: calc(100% - 32px);
+      max-width: 880px;
+      background: rgba(26, 18, 23, 0.9);
+      backdrop-filter: blur(26px) saturate(170%);
+      -webkit-backdrop-filter: blur(26px) saturate(170%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 22px;
+      box-shadow: 0 24px 55px rgba(42, 14, 40, 0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+      padding: 10px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      gap: 2px;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.4s var(--ease), visibility 0.4s var(--ease);
+      pointer-events: none;
+      transition: opacity 0.3s var(--ease), transform 0.32s var(--ease), visibility 0.3s var(--ease);
     }
-    body.menu-open .nav-menu { opacity: 1; visibility: visible; }
-    .nav-menu-links {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
+    body.menu-open .nav-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0) scale(1);
     }
+    .nav-menu-links { display: flex; flex-direction: column; gap: 2px; }
     .nav-menu-links a {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(30px, 9vw, 40px);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
       font-weight: 500;
-      color: var(--ivory);
+      color: rgba(255, 255, 255, 0.82);
       text-decoration: none;
-      padding: 10px 22px;
-      opacity: 0;
-      transform: translateY(16px);
-      transition: color 0.2s, opacity 0.5s var(--ease), transform 0.5s var(--ease);
+      padding: 13px 18px;
+      border-radius: 14px;
+      transition: background 0.2s, color 0.2s;
     }
-    .nav-menu-links a.active { color: var(--plum-400); }
-    body.menu-open .nav-menu-links a { opacity: 1; transform: translateY(0); }
-    body.menu-open .nav-menu-links a:nth-child(1) { transition-delay: 0.06s; }
-    body.menu-open .nav-menu-links a:nth-child(2) { transition-delay: 0.12s; }
-    body.menu-open .nav-menu-links a:nth-child(3) { transition-delay: 0.18s; }
-    body.menu-open .nav-menu-links a:nth-child(4) { transition-delay: 0.24s; }
-    body.menu-open .nav-menu-links a:nth-child(5) { transition-delay: 0.30s; }
+    .nav-menu-links a:hover { background: rgba(255,255,255,0.07); color: #fff; }
+    .nav-menu-links a.active { background: rgba(255,255,255,0.08); color: var(--plum-400); }
     .nav-menu-cta {
-      margin-top: 28px;
-      display: inline-flex;
+      margin-top: 6px;
+      display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
+      gap: 9px;
       background: var(--ivory);
       color: var(--plum-900);
       font-family: 'DM Sans', sans-serif;
       font-weight: 500;
       font-size: 15px;
-      padding: 15px 28px;
-      border-radius: 999px;
+      padding: 14px 18px;
+      border-radius: 14px;
       text-decoration: none;
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
     }
-    body.menu-open .nav-menu-cta { opacity: 1; transform: translateY(0); transition-delay: 0.36s; }
     .nav-menu-cta svg { width: 15px; height: 15px; }
 
     /* ─── HERO ─── */
@@ -2202,18 +2202,24 @@
       const toggle = document.getElementById('navToggle');
       const menu   = document.getElementById('navMenu');
       if (!toggle || !menu) return;
+      const isOpen = () => document.body.classList.contains('menu-open');
       function setOpen(open) {
         document.body.classList.toggle('menu-open', open);
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
         menu.setAttribute('aria-hidden', open ? 'false' : 'true');
-        document.body.style.overflow = open ? 'hidden' : '';
       }
-      toggle.addEventListener('click', () => setOpen(!document.body.classList.contains('menu-open')));
+      toggle.addEventListener('click', (e) => { e.stopPropagation(); setOpen(!isOpen()); });
       menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
       window.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+      // Fermer si on clique en dehors de la barre / du panneau
+      document.addEventListener('click', e => {
+        if (isOpen() && !menu.contains(e.target) && !document.getElementById('nav').contains(e.target)) setOpen(false);
+      });
+      // Fermer au défilement (le panneau est ancré à la barre)
+      window.addEventListener('scroll', () => { if (isOpen()) setOpen(false); }, { passive: true });
       // Sécurité : si on repasse en desktop, on ferme le menu
-      window.matchMedia('(min-width: 601px)').addEventListener('change', e => { if (e.matches) setOpen(false); });
+      window.matchMedia('(min-width: 701px)').addEventListener('change', e => { if (e.matches) setOpen(false); });
     })();
     window.addEventListener('load', () => {
       const active = document.querySelector('.nav-links a.active');
