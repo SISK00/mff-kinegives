@@ -718,6 +718,7 @@
     }
     .gallery-main {
       position: relative;
+      min-width: 0; /* sinon l'element de grille ne peut pas retrecir sous son contenu */
       height: clamp(460px, 60vh, 640px);
       border-radius: 22px;
       overflow: hidden;
@@ -939,6 +940,7 @@
 
     /* Plateau de vignettes (rail) */
     .gallery-rail {
+      min-width: 0; /* le rail horizontal (mobile) ne doit pas elargir la grille */
       height: clamp(460px, 60vh, 640px);
       overflow-y: auto;
       display: flex;
@@ -1655,6 +1657,24 @@
       .nav-cta { display: none; }
       .nav-toggle { display: block; }
       nav { padding: 6px 6px 6px 18px; }
+
+      /* Pastilles des cabines : l'image est bien plus petite, on réduit à l'échelle */
+      .gallery-hotspot {
+        width: 34px; height: 34px;
+        font-size: 17px;
+        border-width: 1.5px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.32);
+      }
+      .gallery-hotspot::before { inset: -5px; border-width: 1.5px; }
+      /* Le libellé n'apparaît qu'au survol : inutile au tactile */
+      .gallery-hotspot-label { display: none; }
+    }
+    @media (max-width: 430px) {
+      .gallery-hotspot {
+        width: 27px; height: 27px;
+        font-size: 14px;
+      }
+      .gallery-hotspot::before { inset: -4px; }
     }
 
     /* ─── PRESS FEEDBACK ─── */
