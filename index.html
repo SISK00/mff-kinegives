@@ -4,9 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MFF Kinégives — Cabinet de kinésithérapie à Gives</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <meta name="description" content="Cabinet de kinésithérapie à Gives (Huy). Rééducation, orthopédie, kiné respiratoire, drainage lymphatique. Au cabinet et à domicile, sur rendez-vous. Conventionnée INAMI." />
+  <link rel="stylesheet" href="fonts/fonts.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1347,6 +1346,60 @@
       min-height: 480px;
       border: 1px solid var(--plum-200);
     }
+    /* Ecran de consentement de la carte (aucun appel a Google avant le clic) */
+    .map-consent {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 0%, var(--plum-100) 0%, transparent 70%),
+        var(--cream);
+    }
+    .map-consent-inner { max-width: 380px; }
+    .map-consent svg {
+      width: 34px; height: 34px;
+      stroke: var(--plum-600);
+      margin-bottom: 12px;
+    }
+    .map-consent h3 {
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--plum-900);
+      margin-bottom: 10px;
+    }
+    .map-consent p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      font-weight: 300;
+      margin-bottom: 20px;
+    }
+    .map-consent-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ivory);
+      background: var(--plum-800);
+      border: none;
+      padding: 13px 24px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.25s var(--ease), transform 0.2s var(--ease);
+    }
+    .map-consent-btn:hover { background: var(--plum-900); }
+    .map-consent-btn:active { transform: scale(0.97); }
+    .map-consent-alt {
+      display: block;
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--plum-700);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
     .location-map iframe {
       width: 100%; height: 100%;
       border: 0;
@@ -2161,14 +2214,24 @@
           </div>
         </div>
 
-        <div class="location-map reveal reveal-delay-2">
-          <iframe
-            src="https://maps.google.com/maps?q=Rue+Emile+Vandervelde+17,+4500+Gives,+Belgique&z=15&output=embed"
-            allowfullscreen
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Localisation MFF Kinégives"
-          ></iframe>
+        <!-- Carte chargée uniquement au clic : aucune donnée n'est envoyée à Google
+             tant que le visiteur ne l'a pas demandé (RGPD, pas de cookie déposé). -->
+        <div class="location-map reveal reveal-delay-2" id="mapZone">
+          <div class="map-consent" id="mapConsent">
+            <div class="map-consent-inner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+              <h3>Voir le plan d'accès</h3>
+              <p>
+                La carte est fournie par Google Maps. En l'affichant, votre adresse IP est
+                transmise à Google, qui peut déposer des cookies. Rien n'est envoyé tant que
+                vous ne cliquez pas.
+              </p>
+              <button type="button" class="map-consent-btn" id="mapLoad">Afficher la carte</button>
+              <a class="map-consent-alt" href="https://www.google.com/maps/dir/?api=1&destination=Rue+Emile+Vandervelde+17,+4500+Gives,+Belgique" target="_blank" rel="noopener">
+                Ou ouvrir l'itinéraire dans un nouvel onglet
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2251,8 +2314,8 @@
       <div class="footer-logo"><span class="footer-logo-dot"></span>MFF KINÉGIVES</div>
       <div class="footer-copy">© 2026 · Gives, Belgique · Tous droits réservés</div>
       <div class="footer-links">
-        <a href="#">Mentions légales</a>
-        <a href="#">Confidentialité</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="politique-de-confidentialite.html">Confidentialité</a>
       </div>
     </div>
   </footer>
@@ -2550,6 +2613,24 @@
 
       show('vue-ensemble');
       booting = false;
+    })();
+
+    // ───────── CARTE : chargement uniquement sur action du visiteur ─────────
+    (function initMapConsent() {
+      const btn  = document.getElementById('mapLoad');
+      const zone = document.getElementById('mapZone');
+      const veil = document.getElementById('mapConsent');
+      if (!btn || !zone || !veil) return;
+      btn.addEventListener('click', () => {
+        const f = document.createElement('iframe');
+        f.src = 'https://maps.google.com/maps?q=Rue+Emile+Vandervelde+17,+4500+Gives,+Belgique&z=15&output=embed';
+        f.title = 'Localisation MFF Kinégives';
+        f.loading = 'lazy';
+        f.referrerPolicy = 'no-referrer';
+        f.allowFullscreen = true;
+        zone.appendChild(f);
+        veil.remove();
+      });
     })();
   </script>
 </body>

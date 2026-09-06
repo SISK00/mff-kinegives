@@ -1,0 +1,240 @@
+/* Styles des pages légales — MFF Kinégives
+   Reprend les tokens du site principal pour rester cohérent. */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --plum-900: #2a0e28;
+  --plum-800: #4a1b44;
+  --plum-700: #6b2461;
+  --plum-600: #742869;
+  --plum-500: #8a4680;
+  --plum-400: #c190b8;
+  --plum-200: #e8d5e4;
+  --plum-100: #f3e9f1;
+  --plum-50:  #faf5f9;
+
+  --ivory:    #fbf8f6;
+  --cream:    #f5efeb;
+  --sand:     #ebe3dc;
+  --ink:      #1a1217;
+  --ink-soft: #3a2f36;
+  --muted:    #8a7a85;
+
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--ivory);
+  color: var(--ink-soft);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.7;
+}
+
+::selection { background: var(--plum-700); color: var(--ivory); }
+
+/* ─── En-tête ─── */
+.legal-top {
+  background: var(--plum-900);
+  padding: 22px clamp(20px, 5vw, 56px);
+}
+.legal-top-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.legal-logo {
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.legal-logo-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--plum-400);
+  box-shadow: 0 0 12px var(--plum-400);
+}
+.legal-back {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+}
+.legal-back:hover { color: #fff; }
+.legal-back svg { width: 14px; height: 14px; }
+
+/* ─── Corps ─── */
+.legal-wrap {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: clamp(48px, 7vw, 80px) clamp(20px, 5vw, 56px) 80px;
+}
+
+.legal-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--plum-600);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.legal-eyebrow::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--plum-400);
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(38px, 6vw, 58px);
+  font-weight: 500;
+  line-height: 1.03;
+  color: var(--plum-900);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  margin: 18px 0 10px;
+}
+
+.legal-updated {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-bottom: 44px;
+}
+
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(26px, 3.4vw, 34px);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--plum-800);
+  text-wrap: balance;
+  margin: 46px 0 14px;
+  padding-top: 26px;
+  border-top: 1px solid var(--plum-200);
+}
+h2:first-of-type { border-top: none; padding-top: 0; }
+
+h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--plum-900);
+  margin: 26px 0 8px;
+}
+
+p { font-size: 15px; margin-bottom: 14px; max-width: 68ch; }
+
+a { color: var(--plum-700); text-underline-offset: 3px; }
+a:hover { color: var(--plum-900); }
+
+ul { margin: 0 0 16px 0; padding-left: 0; list-style: none; max-width: 68ch; }
+li {
+  font-size: 15px;
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 8px;
+}
+li::before {
+  content: '';
+  position: absolute;
+  left: 4px; top: 11px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--plum-400);
+}
+
+strong { color: var(--plum-900); font-weight: 600; }
+
+/* Bloc d'identité / encadré */
+.legal-card {
+  background: var(--cream);
+  border: 1px solid var(--sand);
+  border-radius: 18px;
+  padding: 26px 28px;
+  margin: 20px 0 8px;
+}
+.legal-card dl {
+  display: grid;
+  grid-template-columns: minmax(150px, 34%) 1fr;
+  gap: 10px 22px;
+}
+.legal-card dt {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--plum-600);
+  padding-top: 3px;
+}
+.legal-card dd { font-size: 15px; color: var(--plum-900); }
+
+/* Encart d'information */
+.legal-note {
+  background: var(--plum-50);
+  border: 1px solid var(--plum-200);
+  border-left: 3px solid var(--plum-500);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin: 22px 0;
+}
+.legal-note p { font-size: 14px; margin-bottom: 0; }
+.legal-note p + p { margin-top: 10px; }
+
+/* ─── Pied de page ─── */
+.legal-foot {
+  background: var(--plum-900);
+  padding: 30px clamp(20px, 5vw, 56px);
+}
+.legal-foot-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.legal-foot-copy {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: rgba(251, 248, 246, 0.4);
+}
+.legal-foot-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.legal-foot-links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  color: rgba(251, 248, 246, 0.55);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.legal-foot-links a:hover { color: var(--plum-400); }
+
+@media (max-width: 560px) {
+  .legal-card { padding: 20px; }
+  .legal-card dl { grid-template-columns: 1fr; gap: 3px 0; }
+  .legal-card dd { margin-bottom: 12px; }
+  .legal-foot-inner { flex-direction: column; text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
