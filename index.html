@@ -1946,21 +1946,25 @@
 
             <!-- Zones cliquables — visibles uniquement sur la vue d'ensemble -->
             <div class="gallery-hotspots is-visible" id="galleryHotspots">
-              <button class="gallery-hotspot" style="left:31%; top:41.8%; --rot:-8deg;" data-goto="cabine-1" aria-label="Voir la cabine 1">
+              <button class="gallery-hotspot" style="left:89%; top:29.5%; --rot:4deg;" data-goto="cabine-1" aria-label="Voir la cabine 1">
                 <span class="gh-num">1</span>
                 <span class="gallery-hotspot-label">Cabine 1</span>
               </button>
-              <button class="gallery-hotspot" style="left:57%; top:38.5%; --rot:-8deg;" data-goto="cabine-2" aria-label="Voir la cabine 2">
+              <button class="gallery-hotspot" style="left:59.5%; top:27.5%; --rot:4deg;" data-goto="cabine-2" aria-label="Voir la cabine 2">
                 <span class="gh-num">2</span>
                 <span class="gallery-hotspot-label">Cabine 2</span>
               </button>
-              <button class="gallery-hotspot" style="left:84%; top:35.2%; --rot:-8deg;" data-goto="cabine-3" aria-label="Voir la cabine 3">
+              <button class="gallery-hotspot" style="left:35.5%; top:24%; --rot:4deg;" data-goto="cabine-3" aria-label="Voir la cabine 3">
                 <span class="gh-num">3</span>
                 <span class="gallery-hotspot-label">Cabine 3</span>
               </button>
+              <button class="gallery-hotspot" style="left:17.5%; top:22%; --rot:4deg;" data-goto="cabine-4" aria-label="Voir la cabine 4">
+                <span class="gh-num">4</span>
+                <span class="gallery-hotspot-label">Cabine 4</span>
+              </button>
             </div>
 
-            <div class="gallery-index"><span id="galleryIndex">00 / 05</span></div>
+            <div class="gallery-index"><span id="galleryIndex">00 / 06</span></div>
 
             <div class="gallery-hint" id="galleryHint">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
@@ -2002,7 +2006,7 @@
             <span class="rail-text">
               <span class="rail-num">01</span>
               <span class="rail-name">Cabine 1</span>
-              <span class="rail-desc">Table & matériel de rééducation</span>
+              <span class="rail-desc">Table de soin & poster anatomique</span>
             </span>
           </button>
           <button class="rail-item" data-scene="cabine-2">
@@ -2010,7 +2014,7 @@
             <span class="rail-text">
               <span class="rail-num">02</span>
               <span class="rail-name">Cabine 2</span>
-              <span class="rail-desc">Espalier & récupération</span>
+              <span class="rail-desc">Matériel & accessoires à portée</span>
             </span>
           </button>
           <button class="rail-item" data-scene="cabine-3">
@@ -2018,13 +2022,21 @@
             <span class="rail-text">
               <span class="rail-num">03</span>
               <span class="rail-name">Cabine 3</span>
+              <span class="rail-desc">Espalier & récupération</span>
+            </span>
+          </button>
+          <button class="rail-item" data-scene="cabine-4">
+            <span class="rail-thumb"><img src="photos/cabine-4.jpg" alt="" loading="lazy" /></span>
+            <span class="rail-text">
+              <span class="rail-num">04</span>
+              <span class="rail-name">Cabine 4</span>
               <span class="rail-desc">Soins individuels au calme</span>
             </span>
           </button>
           <button class="rail-item" data-scene="consultation">
             <span class="rail-thumb"><img src="photos/consultation.jpg" alt="" loading="lazy" /></span>
             <span class="rail-text">
-              <span class="rail-num">04</span>
+              <span class="rail-num">05</span>
               <span class="rail-name">Salle d'attente</span>
               <span class="rail-desc">Coin bilan & échange</span>
             </span>
@@ -2032,7 +2044,7 @@
           <button class="rail-item" data-scene="fitness">
             <span class="rail-thumb"><img src="photos/fitness.jpg" alt="" loading="lazy" /></span>
             <span class="rail-text">
-              <span class="rail-num">05</span>
+              <span class="rail-num">06</span>
               <span class="rail-name">Plateau technique</span>
               <span class="rail-desc">Réentraînement à l'effort</span>
             </span>
@@ -2404,7 +2416,14 @@
           title: 'Cabine 3',
           desc: "",
           src: 'photos/cabine-3.jpg',
-          prev: 'cabine-2'
+          prev: 'cabine-2',
+          next: 'cabine-4'
+        },
+        'cabine-4': {
+          title: 'Cabine 4',
+          desc: "",
+          src: 'photos/cabine-4.jpg',
+          prev: 'cabine-3'
         },
         'consultation': {
           title: "Salle d'attente",
@@ -2422,9 +2441,26 @@
       };
 
       const order = items.map(b => b.dataset.scene);
-      const total = String(order.length - 1).padStart(2, '0'); // 00 → 05
+      const total = String(order.length - 1).padStart(2, '0'); // 00 → 06
       let current = null;
       let booting = true; // évite tout défilement de page au chargement
+
+      // Cadre adaptatif : la vue d'ensemble est en paysage, les cabines en portrait.
+      // On dimensionne le cadre exactement sur le ratio de la photo affichée, pour
+      // qu'aucune image ne soit rognée et que les pastilles restent alignées.
+      const frame = img.parentElement;
+      let currentRatio = 3 / 4;
+      function layoutFrame() {
+        const main = frame.parentElement;
+        if (!main) return;
+        const cw = main.clientWidth, ch = main.clientHeight;
+        if (!cw || !ch) return;
+        let h = ch, w = h * currentRatio;
+        if (w > cw) { w = cw; h = w / currentRatio; }
+        frame.style.width  = Math.round(w) + 'px';
+        frame.style.height = Math.round(h) + 'px';
+      }
+      window.addEventListener('resize', layoutFrame);
 
       // Défile UNIQUEMENT le rail (jamais la page) pour centrer la vignette active
       function scrollRailTo(el) {
@@ -2448,6 +2484,10 @@
         img.classList.add('is-swapping');
         const next = new Image();
         const swap = () => {
+          if (next.naturalWidth && next.naturalHeight) {
+            currentRatio = next.naturalWidth / next.naturalHeight;
+            layoutFrame();
+          }
           img.src = s.src;
           img.alt = s.title;
           if (bg) bg.style.backgroundImage = `url("${s.src}")`;
