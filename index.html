@@ -1721,6 +1721,14 @@
       .gallery-hotspot::before { inset: -5px; border-width: 1.5px; }
       /* Le libellé n'apparaît qu'au survol : inutile au tactile */
       .gallery-hotspot-label { display: none; }
+
+      /* Flèches descendues et réduites : à mi-hauteur elles masquaient la
+         pastille de la cabine 1, collée au bord droit sur petit écran. */
+      .gallery-nav {
+        top: 62%;
+        width: 38px; height: 38px;
+      }
+      .gallery-nav svg { width: 16px; height: 16px; }
     }
     @media (max-width: 430px) {
       .gallery-hotspot {
