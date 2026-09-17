@@ -1392,14 +1392,39 @@
     }
     .map-consent-btn:hover { background: var(--plum-900); }
     .map-consent-btn:active { transform: scale(0.97); }
-    .map-consent-alt {
-      display: block;
-      margin-top: 14px;
-      font-size: 12px;
-      color: var(--plum-700);
-      text-decoration: underline;
-      text-underline-offset: 3px;
+    .maps-dialog {
+      margin: auto;
+      width: min(360px, calc(100% - 40px));
+      border: 1px solid var(--plum-200);
+      border-radius: 20px;
+      padding: 28px 26px 22px;
+      background: var(--ivory);
+      color: var(--ink-soft);
+      text-align: center;
+      box-shadow: var(--shadow-lg);
     }
+    .maps-dialog::backdrop { background: rgba(26, 18, 23, 0.55); }
+    .maps-dialog h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--plum-900);
+      margin-bottom: 8px;
+    }
+    .maps-dialog p { font-size: 14px; margin-bottom: 22px; }
+    .maps-dialog-actions { display: flex; gap: 10px; justify-content: center; }
+    .maps-dialog-no {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--plum-800);
+      background: transparent;
+      border: 1px solid var(--plum-200);
+      padding: 13px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .maps-dialog-no:hover { background: var(--plum-50); }
     .location-map iframe {
       width: 100%; height: 100%;
       border: 0;
@@ -2228,16 +2253,9 @@
           <div class="map-consent" id="mapConsent">
             <div class="map-consent-inner">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
-              <h3>Voir le plan d'accès</h3>
-              <p>
-                La carte est fournie par Google Maps. En l'affichant, votre adresse IP est
-                transmise à Google, qui peut déposer des cookies. Rien n'est envoyé tant que
-                vous ne cliquez pas.
-              </p>
-              <button type="button" class="map-consent-btn" id="mapLoad">Afficher la carte</button>
-              <a class="map-consent-alt" href="https://www.google.com/maps/dir/?api=1&destination=Rue+Emile+Vandervelde+17,+4500+Gives,+Belgique" target="_blank" rel="noopener">
-                Ou ouvrir l'itinéraire dans un nouvel onglet
-              </a>
+              <h3>Plan d'accès</h3>
+              <p>Cette carte Google Maps utilise des cookies.</p>
+              <button type="button" class="map-consent-btn" id="mapLoad">Accepter et afficher la carte</button>
             </div>
           </div>
         </div>
@@ -2317,6 +2335,16 @@
   </section>
 
   <!-- FOOTER -->
+  <!-- Confirmation avant d'ouvrir Google Maps (itinéraire) -->
+  <dialog class="maps-dialog" id="mapsDialog" aria-labelledby="mapsDialogTitle">
+    <h3 id="mapsDialogTitle">Ouvrir Google Maps ?</h3>
+    <p>Google Maps utilise des cookies.</p>
+    <div class="maps-dialog-actions">
+      <button type="button" class="maps-dialog-no" id="mapsDialogNo">Refuser</button>
+      <button type="button" class="map-consent-btn" id="mapsDialogYes">Accepter</button>
+    </div>
+  </dialog>
+
   <footer>
     <div class="footer-inner">
       <div class="footer-logo"><span class="footer-logo-dot"></span>MFF KINÉGIVES</div>
@@ -2623,13 +2651,18 @@
       booting = false;
     })();
 
-    // ───────── CARTE : chargement uniquement sur action du visiteur ─────────
+    // ───────── GOOGLE MAPS : rien n'est chargé ni ouvert sans l'accord du visiteur ─────────
+    // L'accord vaut pour la visite en cours uniquement (rien n'est mémorisé).
     (function initMapConsent() {
-      const btn  = document.getElementById('mapLoad');
-      const zone = document.getElementById('mapZone');
-      const veil = document.getElementById('mapConsent');
-      if (!btn || !zone || !veil) return;
-      btn.addEventListener('click', () => {
+      const btn    = document.getElementById('mapLoad');
+      const zone   = document.getElementById('mapZone');
+      const veil   = document.getElementById('mapConsent');
+      const dialog = document.getElementById('mapsDialog');
+      let accepted = false;
+      let pendingUrl = null;
+
+      function loadMap() {
+        if (!zone || !veil || !veil.isConnected) return;
         const f = document.createElement('iframe');
         f.src = 'https://maps.google.com/maps?q=Rue+Emile+Vandervelde+17,+4500+Gives,+Belgique&z=15&output=embed';
         f.title = 'Localisation MFF Kinégives';
@@ -2638,7 +2671,33 @@
         f.allowFullscreen = true;
         zone.appendChild(f);
         veil.remove();
+      }
+
+      if (btn) btn.addEventListener('click', () => { accepted = true; loadMap(); });
+
+      // Liens « Itinéraire » : demander l'accord avant d'ouvrir Google Maps
+      document.querySelectorAll('a[href*="google.com/maps"]').forEach(a => {
+        a.addEventListener('click', e => {
+          if (accepted || !dialog || typeof dialog.showModal !== 'function') return;
+          e.preventDefault();
+          pendingUrl = a.href;
+          dialog.showModal();
+        });
       });
+
+      if (dialog) {
+        document.getElementById('mapsDialogYes').addEventListener('click', () => {
+          accepted = true;
+          dialog.close();
+          loadMap();
+          if (pendingUrl) window.open(pendingUrl, '_blank', 'noopener');
+          pendingUrl = null;
+        });
+        document.getElementById('mapsDialogNo').addEventListener('click', () => {
+          pendingUrl = null;
+          dialog.close();
+        });
+      }
     })();
   </script>
 </body>
