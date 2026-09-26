@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /plans/
+
+Sitemap: https://mff-kinegives.be/sitemap.xml
