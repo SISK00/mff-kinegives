@@ -6,6 +6,9 @@
   <title>MFF Kinégives — Cabinet de kinésithérapie à Gives</title>
   <meta name="description" content="Cabinet de kinésithérapie à Gives (Huy). Rééducation, orthopédie, kiné respiratoire, drainage lymphatique. Au cabinet et à domicile, sur rendez-vous. Conventionnée INAMI." />
   <link rel="canonical" href="https://mff-kinegives.be/" />
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
+  <link rel="icon" href="icon-192.png" type="image/png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://mff-kinegives.be/" />
   <meta property="og:title" content="MFF Kinégives — Kinésithérapeute à Gives (Huy)" />
@@ -40,9 +43,175 @@
     ]
   }
   </script>
-  <link rel="stylesheet" href="fonts/fonts.css" />
+  <!-- Polices du titre chargées en priorité (affichage plus rapide du haut de page) -->
+  <link rel="preload" href="fonts/cormorant-garamond-500-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/cormorant-garamond-400-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <!-- Copie de fonts/fonts.css intégrée ici pour éviter une requête bloquante (les pages légales utilisent le fichier) -->
+  <style>
+    @font-face {
+      font-family: 'Cormorant Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('fonts/cormorant-garamond-400-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: 'Cormorant Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('fonts/cormorant-garamond-400-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'Cormorant Garamond';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url('fonts/cormorant-garamond-500-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: 'Cormorant Garamond';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url('fonts/cormorant-garamond-500-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'Cormorant Garamond';
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url('fonts/cormorant-garamond-600-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: 'Cormorant Garamond';
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url('fonts/cormorant-garamond-600-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'Cormorant Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('fonts/cormorant-garamond-700-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: 'Cormorant Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('fonts/cormorant-garamond-700-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url('fonts/dm-sans-300-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url('fonts/dm-sans-300-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('fonts/dm-sans-400-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('fonts/dm-sans-400-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url('fonts/dm-sans-500-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url('fonts/dm-sans-500-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url('fonts/dm-sans-600-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: 'DM Sans';
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url('fonts/dm-sans-600-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('fonts/jetbrains-mono-400-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('fonts/jetbrains-mono-400-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url('fonts/jetbrains-mono-500-latin-ext.woff2') format('woff2');
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url('fonts/jetbrains-mono-500-latin.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+  </style>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    picture { display: contents; }
 
     :root {
       /* palette violette modernisée — plus de nuances, moins saturée */
@@ -871,7 +1040,9 @@
       pointer-events: none;
     }
     .gallery-caption .tour-eyebrow { color: var(--plum-400); }
-    .gallery-caption h4 {
+    .gallery-caption h3 {
+      letter-spacing: normal;
+      text-wrap: wrap;
       font-family: 'Cormorant Garamond', serif;
       font-size: 32px;
       font-weight: 500;
@@ -1150,7 +1321,7 @@
       display: block;
       margin-bottom: 6px;
     }
-    .tour-scene-info h4 {
+    .tour-scene-info h3 {
       font-family: 'Cormorant Garamond', serif;
       font-size: 22px;
       font-weight: 500;
@@ -1685,7 +1856,7 @@
     .footer-copy {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
-      color: rgba(251, 248, 246, 0.35);
+      color: rgba(251, 248, 246, 0.55);
     }
     .footer-links { display: flex; gap: 20px; }
     .footer-links a {
@@ -1723,7 +1894,7 @@
       .gallery { grid-template-columns: 1fr; gap: 12px; padding: 12px; border-radius: 26px; }
       .gallery-main { height: min(74vh, 560px); }
       .gallery-caption { padding: 46px 20px 22px; }
-      .gallery-caption h4 { font-size: 26px; }
+      .gallery-caption h3 { font-size: 26px; }
       .gallery-rail {
         height: auto;
         flex-direction: row;
@@ -1887,7 +2058,10 @@
   <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero-media">
-      <img class="hero-photo" src="photos/vue-ensemble.jpg" alt="Le cabinet de kinésithérapie MFF Kinégives à Gives" />
+      <picture>
+        <source type="image/webp" srcset="photos/vue-ensemble-800.webp 800w, photos/vue-ensemble-1200.webp 1200w, photos/vue-ensemble-2000.webp 2000w" sizes="100vw" />
+        <img class="hero-photo" src="photos/vue-ensemble.jpg" alt="Le cabinet de kinésithérapie MFF Kinégives à Gives" fetchpriority="high" />
+      </picture>
       <div class="hero-scrim"></div>
     </div>
 
@@ -2044,7 +2218,10 @@
 
         <article class="praticien reveal">
           <div class="praticien-photo">
-            <img src="photos/MF.jpeg" alt="Portrait de Marie-France Filée, kinésithérapeute" />
+            <picture>
+              <source type="image/webp" srcset="photos/MF-600.webp 600w, photos/MF-1000.webp 1000w" sizes="(max-width: 900px) 100vw, 440px" />
+              <img src="photos/MF.jpeg" alt="Portrait de Marie-France Filée, kinésithérapeute" loading="lazy" decoding="async" />
+            </picture>
           </div>
           <div class="praticien-body">
             <div class="praticien-role">Kinésithérapeute</div>
@@ -2075,7 +2252,10 @@
         <div class="gallery-main">
           <div class="gallery-bg" id="galleryBg"></div>
           <div class="gallery-frame">
-            <img class="gallery-img" id="galleryImg" src="photos/vue-ensemble.jpg" alt="Vue d'ensemble des cabines du cabinet MFF Kinégives" />
+            <picture>
+              <source type="image/webp" id="gallerySource" srcset="photos/vue-ensemble-800.webp 800w, photos/vue-ensemble-1200.webp 1200w, photos/vue-ensemble-2000.webp 2000w" sizes="(max-width: 700px) 100vw, 800px" />
+              <img class="gallery-img" id="galleryImg" src="photos/vue-ensemble.jpg" alt="Vue d'ensemble des cabines du cabinet MFF Kinégives" loading="lazy" decoding="async" />
+            </picture>
 
             <!-- Zones cliquables — visibles uniquement sur la vue d'ensemble -->
             <div class="gallery-hotspots is-visible" id="galleryHotspots">
@@ -2109,7 +2289,7 @@
 
             <div class="gallery-caption">
               <span class="tour-eyebrow">Le cabinet · Visite en images</span>
-              <h4 id="tourSceneTitle">Vue d'ensemble</h4>
+              <h3 id="tourSceneTitle">Vue d'ensemble</h3>
               <p id="tourSceneDesc" style="display:none"></p>
             </div>
 
@@ -2125,7 +2305,7 @@
         <!-- Plateau de navigation : vignettes -->
         <div class="gallery-rail" id="galleryRail">
           <button class="rail-item active" data-scene="vue-ensemble">
-            <span class="rail-thumb"><img src="photos/vue-ensemble.jpg" alt="" loading="lazy" /></span>
+            <span class="rail-thumb"><picture><source type="image/webp" srcset="photos/vue-ensemble-400.webp" /><img src="photos/vue-ensemble.jpg" alt="" loading="lazy" decoding="async" /></picture></span>
             <span class="rail-text">
               <span class="rail-num">00</span>
               <span class="rail-name">Vue d'ensemble</span>
@@ -2133,7 +2313,7 @@
             </span>
           </button>
           <button class="rail-item" data-scene="cabine-1">
-            <span class="rail-thumb"><img src="photos/cabine-1.jpg" alt="" loading="lazy" /></span>
+            <span class="rail-thumb"><picture><source type="image/webp" srcset="photos/cabine-1-300.webp" /><img src="photos/cabine-1.jpg" alt="" loading="lazy" decoding="async" /></picture></span>
             <span class="rail-text">
               <span class="rail-num">01</span>
               <span class="rail-name">Cabine 1</span>
@@ -2141,7 +2321,7 @@
             </span>
           </button>
           <button class="rail-item" data-scene="cabine-2">
-            <span class="rail-thumb"><img src="photos/cabine-2.jpg" alt="" loading="lazy" /></span>
+            <span class="rail-thumb"><picture><source type="image/webp" srcset="photos/cabine-2-300.webp" /><img src="photos/cabine-2.jpg" alt="" loading="lazy" decoding="async" /></picture></span>
             <span class="rail-text">
               <span class="rail-num">02</span>
               <span class="rail-name">Cabine 2</span>
@@ -2149,7 +2329,7 @@
             </span>
           </button>
           <button class="rail-item" data-scene="cabine-3">
-            <span class="rail-thumb"><img src="photos/cabine-3.jpg" alt="" loading="lazy" /></span>
+            <span class="rail-thumb"><picture><source type="image/webp" srcset="photos/cabine-3-300.webp" /><img src="photos/cabine-3.jpg" alt="" loading="lazy" decoding="async" /></picture></span>
             <span class="rail-text">
               <span class="rail-num">03</span>
               <span class="rail-name">Cabine 3</span>
@@ -2157,7 +2337,7 @@
             </span>
           </button>
           <button class="rail-item" data-scene="cabine-4">
-            <span class="rail-thumb"><img src="photos/cabine-4.jpg" alt="" loading="lazy" /></span>
+            <span class="rail-thumb"><picture><source type="image/webp" srcset="photos/cabine-4-300.webp" /><img src="photos/cabine-4.jpg" alt="" loading="lazy" decoding="async" /></picture></span>
             <span class="rail-text">
               <span class="rail-num">04</span>
               <span class="rail-name">Cabine 4</span>
@@ -2165,7 +2345,7 @@
             </span>
           </button>
           <button class="rail-item" data-scene="consultation">
-            <span class="rail-thumb"><img src="photos/consultation.jpg" alt="" loading="lazy" /></span>
+            <span class="rail-thumb"><picture><source type="image/webp" srcset="photos/consultation-300.webp" /><img src="photos/consultation.jpg" alt="" loading="lazy" decoding="async" /></picture></span>
             <span class="rail-text">
               <span class="rail-num">05</span>
               <span class="rail-name">Salle d'attente</span>
@@ -2173,7 +2353,7 @@
             </span>
           </button>
           <button class="rail-item" data-scene="fitness">
-            <span class="rail-thumb"><img src="photos/fitness.jpg" alt="" loading="lazy" /></span>
+            <span class="rail-thumb"><picture><source type="image/webp" srcset="photos/fitness-300.webp" /><img src="photos/fitness.jpg" alt="" loading="lazy" decoding="async" /></picture></span>
             <span class="rail-text">
               <span class="rail-num">06</span>
               <span class="rail-name">Plateau technique</span>
@@ -2531,8 +2711,23 @@
       const prevBtn  = document.getElementById('galleryPrev');
       const nextBtn  = document.getElementById('galleryNext');
       const escBtn   = document.getElementById('galleryEscape');
+      const source   = document.getElementById('gallerySource');
       const items    = Array.from(document.querySelectorAll('.rail-item'));
       if (!img || !items.length) return;
+
+      // Versions WebP allégées (photos/<nom>-<largeur>.webp) ; les JPG restent en secours
+      // (le format est détecté via la photo du haut de page, déjà choisie par le navigateur au moment d'un clic)
+      const heroImg  = document.querySelector('.hero-photo');
+      const hasWebp  = () => /.webp$/.test((heroImg && heroImg.currentSrc) || '');
+      const widthsOf = src => /vue-ensemble/.test(src) ? [800, 1200, 2000] : [300, 600, 1200];
+      const webpSet  = src => widthsOf(src).map(w => src.replace(/.jpe?g$/, '-' + w + '.webp') + ' ' + w + 'w').join(', ');
+      // Fond flouté : petite version WebP ; les navigateurs anciens gardent le JPG
+      function setBg(src) {
+        if (!bg) return;
+        const small = src.replace(/.jpe?g$/, /vue-ensemble/.test(src) ? '-400.webp' : '-300.webp');
+        bg.style.backgroundImage = `url("${src}")`;
+        bg.style.backgroundImage = `image-set(url("${small}") type("image/webp"), url("${src}") type("image/jpeg"))`;
+      }
 
       const SCENES = {
         'vue-ensemble': {
@@ -2589,17 +2784,28 @@
       // Cadre adaptatif : la vue d'ensemble est en paysage, les cabines en portrait.
       // On dimensionne le cadre exactement sur le ratio de la photo affichée, pour
       // qu'aucune image ne soit rognée et que les pastilles restent alignées.
-      const frame = img.parentElement;
+      const frame = img.closest('.gallery-frame');
       let currentRatio = 3 / 4;
-      function layoutFrame() {
+      // Taille du cadre pour un ratio donné (sans l'appliquer)
+      function frameSize(ratio) {
         const main = frame.parentElement;
-        if (!main) return;
+        if (!main) return null;
         const cw = main.clientWidth, ch = main.clientHeight;
-        if (!cw || !ch) return;
-        let h = ch, w = h * currentRatio;
-        if (w > cw) { w = cw; h = w / currentRatio; }
+        if (!cw || !ch) return null;
+        let h = ch, w = h * ratio;
+        if (w > cw) { w = cw; h = w / ratio; }
+        return { w, h };
+      }
+      function layoutFrame() {
+        const size = frameSize(currentRatio);
+        if (!size) return;
+        const { w, h } = size;
         frame.style.width  = Math.round(w) + 'px';
         frame.style.height = Math.round(h) + 'px';
+        // le navigateur choisit la taille de photo adaptée au cadre réel
+        const sizes = Math.round(w) + 'px';
+        img.sizes = sizes;
+        if (source) source.sizes = sizes;
       }
       window.addEventListener('resize', layoutFrame);
 
@@ -2621,6 +2827,12 @@
         if (!s || id === current) return;
         current = id;
 
+        // Au chargement de la page, la vue d'ensemble est déjà dans le HTML (chargée à l'approche)
+        if (booting) {
+          currentRatio = 4 / 3;
+          layoutFrame();
+          setBg(s.src);
+        } else {
         // fondu : on précharge la nouvelle image avant de l'afficher
         img.classList.add('is-swapping');
         const next = new Image();
@@ -2629,14 +2841,20 @@
             currentRatio = next.naturalWidth / next.naturalHeight;
             layoutFrame();
           }
+          if (source) source.srcset = webpSet(s.src);
           img.src = s.src;
           img.alt = s.title;
-          if (bg) bg.style.backgroundImage = `url("${s.src}")`;
+          setBg(s.src);
           requestAnimationFrame(() => img.classList.remove('is-swapping'));
         };
         next.onload = swap;
         next.onerror = swap; // on affiche quand même (utile tant que les fichiers ne sont pas déposés)
+        // on précharge directement la taille adaptée au futur cadre (paysage 4:3, portrait 3:4)
+        const target = frameSize(/vue-ensemble/.test(s.src) ? 4 / 3 : 3 / 4);
+        next.sizes = target ? Math.round(target.w) + 'px' : img.sizes;
+        if (hasWebp()) next.srcset = webpSet(s.src);
         next.src = s.src;
+        }
 
         if (titleEl) titleEl.textContent = s.title;
         if (descEl) { descEl.textContent = s.desc || ''; descEl.style.display = s.desc ? '' : 'none'; }

@@ -216,7 +216,7 @@ strong { color: var(--plum-900); font-weight: 600; }
 .legal-foot-copy {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
-  color: rgba(251, 248, 246, 0.4);
+  color: rgba(251, 248, 246, 0.55);
 }
 .legal-foot-links { display: flex; gap: 20px; flex-wrap: wrap; }
 .legal-foot-links a {
